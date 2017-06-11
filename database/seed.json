@@ -1,0 +1,31 @@
+{
+  "games": {
+    "game0": {
+      "title": "Tapper",
+      "giantbomb_id": "7912",
+      "release_year": "1983"
+    }
+  },
+  "arcades": {
+    "arcade0": {
+      "name": "Game Galaxy",
+      "address": "3 S Lowry St, Smyrna, TN 37167"
+    }
+  },
+  "playedwishlistgames": {
+    "playedwishlistgames0": {
+     "uid": "ifaaelkfkevodkekakdkske",
+     "gameid": "K84hfurycvb",
+     "is_played": true,
+     "score": "26,000",
+     "arcadeid": "K66hzzzyyyy",
+     "date": "12/25/13"
+   }
+  }
+  //  "users": {
+  //   "user0": {
+  //     "uid": "",
+  //     "name": "Billy Mitchell"
+  //   }
+  // }
+}
