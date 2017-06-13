@@ -3,14 +3,14 @@
 <h3>Let's search for an arcade game!</h3>
 <input type="text" list="games" name="games" ng-model="search" ng-keyup="searchGiantBomb(search)">
 	<datalist id="games">
-		<option value={{returnedGames}}>
-		<option value="Firefox">
-		<option value="Chrome">
-		<option value="Opera">
-		<option value="Safari">
+		<option value={{gamesArray[0]}}>
+		<option value={{gamesArray[1]}}>
+		<option value={{gamesArray[2]}}>
+<!-- 		<option value="Opera">
+		<option value="Safari"> -->
 	</datalist>
 
-	{{returnedGames}}
+	{{gamesArray}}
 
 
 
