@@ -4,6 +4,16 @@
       "title": "Tapper",
       "giantbomb_id": "7912",
       "release_year": "1983"
+    },
+    "game1": {
+      "title": "Ms. Pac-Man",
+      "giantbomb_id": "6332",
+      "release_year": "1981"  
+    },
+    "game2": {
+      "title": "Cliff Hanger",
+      "giantbomb_id": "88849",
+      "release_year": "1983"  
     }
   },
   "arcades": {
@@ -22,10 +32,4 @@
      "date": "12/25/13"
    }
   }
-  //  "users": {
-  //   "user0": {
-  //     "uid": "",
-  //     "name": "Billy Mitchell"
-  //   }
-  // }
 }
