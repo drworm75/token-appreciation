@@ -1,5 +1,19 @@
 app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_CONFIG) {
 
+	let fbAddGameToFb = (newGame) => {
+		newGame = newGame[0]
+	    return $q ((resolve, reject) => {
+	      $http.post(`${FIREBASE_CONFIG.databaseURL}/games.json`, JSON.stringify(newGame))
+	      .then((fbGames) => {
+	      	console.log("Adding game", fbGames);
+	        resolve(fbGames);
+	      })
+	      .catch((error) => {
+	        reject(error);
+	      });
+	    });
+	};
+
 	let fbGetGameList = () => {
 		let gamesFromFb = [];
 		return $q((resolve, reject) => {
@@ -21,11 +35,25 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 			});
 		});
 	};
+
+	let fbCheckForGameInFb = (gbid) => {
+		let gamesFromFb = [];
+		return $q((resolve, reject) => {
+			$http.get(`${FIREBASE_CONFIG.databaseURL}/games.json?orderBy="giantbomb_id"&equalTo="${gbid}"`)
+			.then((fbGames) => {
+				console.log(fbGames);
+				resolve(fbGames);
+			})
+			.catch((error) => {
+				reject(error);
+			});
+	});
+};
 	
 	let gbSearchGiantBomb = (search) => {
 		let gameNames = [];
 		return $q((resolve, reject) => {
-			$http.get(`https://www.giantbomb.com/api/search/?api_key=${GIANTBOMB_CONFIG.gbapikey}&format=json&query="${search}"&resources=game&field_list=name,image,images,original_release_date`)
+			$http.get(`https://www.giantbomb.com/api/search/?api_key=${GIANTBOMB_CONFIG.gbapikey}&format=json&query="${search}"&resources=game&field_list=name,image,images,original_release_date,id`)
 			.then((gbInfo) => {
 				let gameCollection = gbInfo.data.results;			
 				Object.keys(gameCollection).forEach((key) => {
@@ -35,7 +63,9 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 						gameNames.push({
 							"name": gameCollection[key].name,
 							"image": gameCollection[key].image.small_url,
-							"year": gameCollection[key].original_release_date
+							"year": gameCollection[key].original_release_date,
+							"icon": gameCollection[key].image.icon_url,
+							"giantbomb_id": gameCollection[key].id
 						});
 					}
 				});
@@ -51,6 +81,8 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 	return {
 
 		gbSearchGiantBomb: gbSearchGiantBomb,
-		fbGetGameList: fbGetGameList
+		fbGetGameList: fbGetGameList,
+		fbCheckForGameInFb: fbCheckForGameInFb,
+		fbAddGameToFb: fbAddGameToFb
 	};
 });
