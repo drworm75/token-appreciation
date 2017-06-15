@@ -1,19 +1,25 @@
 {
   "games": {
     "game0": {
-      "title": "Tapper",
       "giantbomb_id": "7912",
-      "release_year": "1983"
+      "icon": "https://www.giantbomb.com/api/image/square_avatar/956016-2598043807_8825757262.jpg",
+      "image": "https://www.giantbomb.com/api/image/scale_small/956016-2598043807_8825757262.jpg",
+      "name": "Tapper",
+      "year": "1983"
     },
     "game1": {
-      "title": "Ms. Pac-Man",
       "giantbomb_id": "6332",
-      "release_year": "1981"  
+      "icon": "https://www.giantbomb.com/api/image/square_avatar/2367786-a2600_mspacman.jpg",
+      "image": "https://www.giantbomb.com/api/image/scale_small/2367786-a2600_mspacman.jpg",
+      "name": "Ms. Pac-Man",
+      "year": "1981"  
     },
     "game2": {
-      "title": "Cliff Hanger",
       "giantbomb_id": "88849",
-      "release_year": "1983"  
+      "icon": "https://www.giantbomb.com/api/image/square_avatar/1325892-cliffhanger_cabinet.jpg",
+      "image": "https://www.giantbomb.com/api/image/scale_small/1325892-cliffhanger_cabinet.jpg",      
+      "name": "Cliff Hanger",
+      "year": "1983"  
     }
   },
   "arcades": {

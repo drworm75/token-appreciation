@@ -1,7 +1,7 @@
 app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_CONFIG) {
 
 	let fbAddGameToFb = (newGame) => {
-		newGame = newGame[0]
+			console.log("newGame",newGame);
 	    return $q ((resolve, reject) => {
 	      $http.post(`${FIREBASE_CONFIG.databaseURL}/games.json`, JSON.stringify(newGame))
 	      .then((fbGames) => {
@@ -23,8 +23,9 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 				console.log(fbGameCollection);
 				Object.keys(fbGameCollection).forEach((key) => {
 					gamesFromFb.push({
-							"name": fbGameCollection[key].title,
-							"year": fbGameCollection[key].release_year
+							"name": fbGameCollection[key].name,
+							"year": fbGameCollection[key].year,
+							"icon": fbGameCollection[key].icon
 						});
 				});
 				console.log(gamesFromFb[0].name);
@@ -58,14 +59,14 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 				let gameCollection = gbInfo.data.results;			
 				Object.keys(gameCollection).forEach((key) => {
 						if (gameCollection[key].image !== null && gameCollection[key].original_release_date !== null) {
-								gameCollection[key].image.small_url = $sce.trustAsResourceUrl(gameCollection[key].image.small_url);
+								// gameCollection[key].image.small_url = $sce.trustAsResourceUrl(gameCollection[key].image.small_url);
 								gameCollection[key].original_release_date = gameCollection[key].original_release_date.slice(0,4);
 						gameNames.push({
 							"name": gameCollection[key].name,
 							"image": gameCollection[key].image.small_url,
 							"year": gameCollection[key].original_release_date,
 							"icon": gameCollection[key].image.icon_url,
-							"giantbomb_id": gameCollection[key].id
+							"giantbomb_id": gameCollection[key].id.toString()
 						});
 					}
 				});

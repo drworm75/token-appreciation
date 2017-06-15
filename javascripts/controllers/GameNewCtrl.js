@@ -34,11 +34,19 @@ app.controller('GameNewCtrl', function($scope, GameFactory) {
         }
       });
       GameFactory.fbCheckForGameInFb(gbIdToCheck).then((gameById) => {
-        console.log("gameById", gameById.data);
+        console.log("gameById", gameById);
 
       if(Object.getOwnPropertyNames(gameById.data).length === 0) {
-          console.log("grab game from gameArray", $scope.gamesArray);
-          addGameToFb($scope.gamesArray)
+          let whatever = $scope.gamesArray[0];
+          let newGameObj = {
+              "name": whatever.name,
+              "image": whatever.image,
+              "year": whatever.year,
+              "icon": whatever.icon,
+              "giantbomb_id": whatever.giantbomb_id
+          }
+          console.log("newGameObj", newGameObj);
+          addGameToFb(newGameObj);
         } else {
           console.log("Careful man, there's a game here!")
           //Write Game Info to User Profile
