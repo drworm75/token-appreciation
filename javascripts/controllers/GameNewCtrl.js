@@ -22,7 +22,7 @@ app.controller('GameNewCtrl', function($scope, GameFactory) {
       GameFactory.fbAddGameToFb(gameToAdd).then((fbGames) => {
 
       }).catch((error) => {
-        console.log("addGameToFb error", addGameToFb)
+        console.log("addGameToFb error", addGameToFb);
       });
     };
 
@@ -44,16 +44,16 @@ app.controller('GameNewCtrl', function($scope, GameFactory) {
               "year": whatever.year,
               "icon": whatever.icon,
               "giantbomb_id": whatever.giantbomb_id
-          }
+          };
           console.log("newGameObj", newGameObj);
           addGameToFb(newGameObj);
         } else {
-          console.log("Careful man, there's a game here!")
+          console.log("Careful man, there's a game here!");
           //Write Game Info to User Profile
         }
 
       }).catch((error) => {
-        console.log("fbCheckForGameInFb error", error)
+        console.log("fbCheckForGameInFb error", error);
       });
     };
 
