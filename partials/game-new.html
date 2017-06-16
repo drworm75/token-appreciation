@@ -1,3 +1,46 @@
 <h1>Welcome to {{header}}</h1>	
 
-<h3>Here at {{header}} our favorite arcade game is {{gameTitle}}</h3>
+<h3>Let's search for an arcade game!</h3>
+<input type="text" list="games" name="games" ng-model="search" ng-keyup="searchGiantBomb(search)">
+	<datalist id="games">
+	    <option ng-repeat="key in gamesArray" value="{{key.name}}">
+	</datalist>
+	<button ng-click="searched = true; card(search)">
+		Select Game
+	</button>
+
+	<div ng-show="searched">
+		{{cardName}}
+		{{cardYear}}
+		<br>
+		<img src ="{{cardImage}}" height="400px">
+		<input type="radio" name="content" value="not-played" ng-model="content">Wishlist
+		<input type="radio" name="content" value="played-game" ng-model="content">I've Played It
+		<span ng-show="content == 'not-played'">
+			<button ng-click="checkForGameInFb(search)">Submit Game 1</button>
+		</span>
+		<span ng-show="content == 'played-game'">
+		<br>
+		Your Score:
+		<br>
+		<input type="text" placeholder="560,000">
+		<br>
+		Played At:
+		<br>
+		<input type="text" placeholder="Arcade Name">
+		<br>
+		Date:
+		<br>
+		<input type="text" placeholder="2/14/98">
+		<button ng-click="checkForGameInFb()">
+			Submit Game 2
+		</button>
+		</span>
+	</div>
+
+
+
+
+
+
+

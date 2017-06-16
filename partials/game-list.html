@@ -1,3 +1,10 @@
 <h1>Welcome to {{header}}</h1>	
 
-<h3>Here at {{header}} our favorite arcade game is {{gameTitle}}</h3>
+<h3>Here at {{header}} we will list arcade games from firebase, like {{myGames[0].name}}</h3>
+
+<div ng-repeat="keys in myGames">
+	{{keys.name}}
+	{{keys.year}}
+	<img src="{{keys.icon}}">
+
+</div>
