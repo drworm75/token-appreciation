@@ -14,20 +14,51 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 	    });
 	};
 
-	let fbGetGameList = () => {
+	let fbGetGameList = (userId) => {
 		let gamesFromFb = [];
 		return $q((resolve, reject) => {
-			$http.get(`${FIREBASE_CONFIG.databaseURL}/games.json`)
+			$http.get(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames.json?orderBy="uid"&equalTo="${userId}"`)
 			.then((fbGames) => {
 				let fbGameCollection = fbGames.data;
 				Object.keys(fbGameCollection).forEach((key) => {
 					gamesFromFb.push({
-							"name": fbGameCollection[key].name,
-							"year": fbGameCollection[key].year,
-							"icon": fbGameCollection[key].icon
-						});
+							"uid": fbGameCollection[key].uid,
+							"giantbomb_id": fbGameCollection[key].giantbomb_id,
+							"is_played": fbGameCollection[key].is_played,
+							"score": fbGameCollection[key].score,
+							"arcadeid": fbGameCollection[key].arcadeid,
+							"date": fbGameCollection[key].date
+					});					
 				});
 				resolve(gamesFromFb);
+			})
+			.catch((error) => {
+				reject(error);
+			});
+		});
+	};
+
+let fbGetUserGame = (gameId) => {
+	let userGameInfoFromFb = [];
+	return $q((resolve, reject) => {
+		$http.get(`${FIREBASE_CONFIG.databaseURL}/games.json?orderBy="giantbomb_id"&equalTo="${gameId}"`)
+		.then((fbGames) => {
+			let fbGameCollection = fbGames.data;
+			if (fbGameCollection !== null) {
+		        Object.keys(fbGameCollection).forEach((key) => {
+		          fbGameCollection[key].id=key;
+		          userGameInfoFromFb.push(fbGameCollection[key]);
+		        });
+		    }
+			// Object.keys(fbGameCollection).forEach((key) => {
+			// 	console.log("fbGameCollection =", fbGameCollection)
+			// 	userGameInfoFromFb.push({
+			// 			"icon": fbGameCollection[key].icon,
+			// 			"name": fbGameCollection[key].name,
+			// 			"year": fbGameCollection[key].year
+			// 		});					
+			// 	});
+				resolve(userGameInfoFromFb);
 			})
 			.catch((error) => {
 				reject(error);
@@ -81,6 +112,7 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 
 		gbSearchGiantBomb: gbSearchGiantBomb,
 		fbGetGameList: fbGetGameList,
+		fbGetUserGame: fbGetUserGame,
 		fbCheckForGameInFb: fbCheckForGameInFb,
 		fbAddGameToFb: fbAddGameToFb
 	};

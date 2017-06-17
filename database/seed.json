@@ -30,18 +30,26 @@
   },
   "playedwishlistgames": {
     "playedwishlistgames0": {
-     "uid": "ifaaelkfkevodkekakdkske",
-     "gameid": "K84hfurycvb",
-     "is_played": true,
-     "score": "26,000",
-     "arcadeid": "K66hzzzyyyy",
-     "date": "12/25/13"
+     "uid": "d2aCRHsWLbQ5ye61KguReXmDKpG3",
+     "giantbomb_id": "88849",
+     "is_played": false,
+     "score": "",
+     "arcadeid": "",
+     "date": ""
+   },
+   "playedwishlistgames1": {
+     "uid": "d2aCRHsWLbQ5ye61KguReXmDKpG3",
+     "giantbomb_id": "6332",
+     "is_played": false,
+     "score": "",
+     "arcadeid": "",
+     "date": ""
    }
      },
   "users": {
-    "user0": {
-      "name": "Billy Mitchell",
-      "uid": ""
+    "KmqVkJC6kH8VOh1wzb9": {
+      "name": "a",
+      "uid": "d2aCRHsWLbQ5ye61KguReXmDKpG3"
     }
   }
 }

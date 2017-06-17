@@ -1,8 +1,16 @@
-<h1>All Games</h1>
-<div ng-repeat="keys in myGames">
-	{{keys.name}}
-	{{keys.year}}
-	<img ng-src="{{keys.icon}}">
+{{currentUser}} Game List
 
-</div>
+<h1>User Games I've Played</h1>
 
+
+
+<h1>Games I want to play</h1>
+	<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:false}">
+	{{game.name}}		
+	{{game.year}}
+	{{game.giantbomb_id}}
+	<img ng-src="{{game.icon}}">
+
+
+
+	</div>
