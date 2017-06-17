@@ -20,7 +20,6 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 			$http.get(`${FIREBASE_CONFIG.databaseURL}/games.json`)
 			.then((fbGames) => {
 				let fbGameCollection = fbGames.data;
-				console.log(fbGameCollection);
 				Object.keys(fbGameCollection).forEach((key) => {
 					gamesFromFb.push({
 							"name": fbGameCollection[key].name,
@@ -28,7 +27,6 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 							"icon": fbGameCollection[key].icon
 						});
 				});
-				console.log(gamesFromFb[0].name);
 				resolve(gamesFromFb);
 			})
 			.catch((error) => {
