@@ -14,12 +14,12 @@
 		{{cardYear}}
 		<br>
 		<img src ="{{cardImage}}" height="400px">
-		<input type="radio" name="content" value="not-played" ng-model="content">Wishlist
-		<input type="radio" name="content" value="played-game" ng-model="content">I've Played It
+		<input type="radio" name="content" value="not-played" ng-model="gameStatus" ng-change="">Wishlist
+		<input type="radio" name="content" value="played-game" ng-model="gameStatus" >I've Played It
 		<span ng-show="content == 'not-played'">
 			<button ng-click="checkForGameInFb(search)">Submit Game 1</button>
 		</span>
-		<span ng-show="content == 'played-game'">
+		<span ng-show="gameStatus == 'played-game'">
 		<br>
 		Your Score:
 		<br>
