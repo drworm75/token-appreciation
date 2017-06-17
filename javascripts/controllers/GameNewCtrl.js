@@ -1,8 +1,9 @@
-app.controller('GameNewCtrl', function($scope, GameFactory) {
+app.controller('GameNewCtrl', function($rootScope, $scope, GameFactory) {
 	$scope.returnedGames = "";
     $scope.header = "Game New";
     $scope.gameTitle = "Exciting New Pac-Man Plus";
     $scope.gamesArray = [];
+    $scope.newGameDataForUser = {};
 
  	$scope.radio = () => {
  		console.log("radio");
@@ -25,18 +26,29 @@ app.controller('GameNewCtrl', function($scope, GameFactory) {
         console.log("addGameToFb error", addGameToFb);
       });
     };
+ 
+    let createPlayedWishlistGameObject = (gameId) => {
+      $scope.newGameDataForUser.is_played = false;
+      $scope.newGameDataForUser.uid = $rootScope.user.uid;
+      $scope.newGameDataForUser.giantbomb_id = gameId;
+      GameFactory.fbCreatePlayedWishlistGameObject($scope.newGameDataForUser).then(() => {
+      }).catch((error) => {
+        console.log("addGameToFb error", addGameToFb);
+      });
+    };
 
     $scope.checkForGameInFb = (passedName) => {
       let gbIdToCheck = "";
+      let thisGamesGbId = "";
       $scope.gamesArray.forEach((gameObj) => {
         if(gameObj.name === passedName) {
           gbIdToCheck = gameObj.giantbomb_id;
         }
       });
-      GameFactory.fbCheckForGameInFb(gbIdToCheck).then((gameById) => {
-        console.log("gameById", gameById);
+      GameFactory.fbCheckForGameInFb(gbIdToCheck).then((gameByIndex) => {
+        console.log("gameByIndex", gameByIndex);
 
-      if(Object.getOwnPropertyNames(gameById.data).length === 0) {
+      if(Object.getOwnPropertyNames(gameByIndex.data).length === 0) {
           let whatever = $scope.gamesArray[0];
           let newGameObj = {
               "name": whatever.name,
@@ -48,8 +60,15 @@ app.controller('GameNewCtrl', function($scope, GameFactory) {
           console.log("newGameObj", newGameObj);
           addGameToFb(newGameObj);
         } else {
-          console.log("Careful man, there's a game here!");
-          //Write Game Info to User Profile
+          console.log("Careful man, there's a game here!", gameByIndex);
+          gameByIndex = gameByIndex.data;
+          if (gameByIndex !== null) {
+            Object.keys(gameByIndex).forEach((key) => {
+              gameByIndex[key].id=key;
+              thisGamesGbId = gameByIndex[key].giantbomb_id;
+            });
+          createPlayedWishlistGameObject(thisGamesGbId);
+        }
         }
 
       }).catch((error) => {

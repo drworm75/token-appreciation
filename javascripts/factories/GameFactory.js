@@ -1,5 +1,19 @@
 app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_CONFIG) {
 
+	let fbCreatePlayedWishlistGameObject = (newObject) => {
+	    return $q ((resolve, reject) => {
+	      $http.post(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames.json`, JSON.stringify(newObject))
+	      .then((fbGames) => {
+	      	console.log("Adding user object", fbGames);
+	        resolve(fbGames);
+	      })
+	      .catch((error) => {
+	        reject(error);
+	      });
+	    });
+	};
+
+
 	let fbAddGameToFb = (newGame) => {
 			console.log("newGame",newGame);
 	    return $q ((resolve, reject) => {
@@ -111,6 +125,7 @@ let fbGetUserGame = (gameId) => {
 	return {
 
 		gbSearchGiantBomb: gbSearchGiantBomb,
+		fbCreatePlayedWishlistGameObject: fbCreatePlayedWishlistGameObject,
 		fbGetGameList: fbGetGameList,
 		fbGetUserGame: fbGetUserGame,
 		fbCheckForGameInFb: fbCheckForGameInFb,
