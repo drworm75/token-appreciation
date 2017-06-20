@@ -1,6 +1,19 @@
 app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_CONFIG) {
 
-	let fbCreatePlayedWishlistGameObject = (newObject) => {
+	let fbCreateWishlistGameObject = (newObject) => {
+	    return $q ((resolve, reject) => {
+	      $http.post(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames.json`, JSON.stringify(newObject))
+	      .then((fbGames) => {
+	      	console.log("Adding user object", fbGames);
+	        resolve(fbGames);
+	      })
+	      .catch((error) => {
+	        reject(error);
+	      });
+	    });
+	};
+
+	let fbCreatePlayedGameObject = (newObject) => {
 	    return $q ((resolve, reject) => {
 	      $http.post(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames.json`, JSON.stringify(newObject))
 	      .then((fbGames) => {
@@ -18,9 +31,9 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 			console.log("newGame",newGame);
 	    return $q ((resolve, reject) => {
 	      $http.post(`${FIREBASE_CONFIG.databaseURL}/games.json`, JSON.stringify(newGame))
-	      .then((fbGames) => {
-	      	console.log("Adding game", fbGames);
-	        resolve(fbGames);
+	      .then(() => {
+	      	console.log("New game afer post", newGame.giantbomb_id);
+	        resolve(newGame.giantbomb_id);
 	      })
 	      .catch((error) => {
 	        reject(error);
@@ -63,15 +76,7 @@ let fbGetUserGame = (gameId) => {
 		          fbGameCollection[key].id=key;
 		          userGameInfoFromFb.push(fbGameCollection[key]);
 		        });
-		    }
-			// Object.keys(fbGameCollection).forEach((key) => {
-			// 	console.log("fbGameCollection =", fbGameCollection)
-			// 	userGameInfoFromFb.push({
-			// 			"icon": fbGameCollection[key].icon,
-			// 			"name": fbGameCollection[key].name,
-			// 			"year": fbGameCollection[key].year
-			// 		});					
-			// 	});
+		    }			
 				resolve(userGameInfoFromFb);
 			})
 			.catch((error) => {
@@ -120,12 +125,35 @@ let fbGetUserGame = (gameId) => {
 				reject(error);
 			});
 		});
+	};	
+
+	let fbSearchFirebaseArcades = (search) => {
+		let arcadeNames = [];
+		return $q((resolve, reject) => {
+			$http.get(`${FIREBASE_CONFIG.databaseURL}/arcades.json?orderBy="name"&equalTo="${search}"`)
+			.then((fbInfo) => {
+				let fbArcadeCollection = fbInfo.data;
+				if (fbArcadeCollection !== null) {
+			        Object.keys(fbArcadeCollection).forEach((key) => {
+			          arcadeNames.push({
+			          	"name": fbArcadeCollection[key].name
+			          });
+		        });
+		    }	
+				resolve(arcadeNames);
+			})
+			.catch((error) => {
+				reject(error);
+			});
+		});
 	};
 
 	return {
 
 		gbSearchGiantBomb: gbSearchGiantBomb,
-		fbCreatePlayedWishlistGameObject: fbCreatePlayedWishlistGameObject,
+		fbSearchFirebaseArcades: fbSearchFirebaseArcades,
+		fbCreateWishlistGameObject: fbCreateWishlistGameObject,
+		fbCreatePlayedGameObject: fbCreatePlayedGameObject,
 		fbGetGameList: fbGetGameList,
 		fbGetUserGame: fbGetUserGame,
 		fbCheckForGameInFb: fbCheckForGameInFb,

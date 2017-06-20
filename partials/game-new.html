@@ -17,22 +17,30 @@
 		<input type="radio" name="content" value="not-played" ng-model="gameStatus">Wishlist
 		<input type="radio" name="content" value="played-game" ng-model="gameStatus">I've Played It
 		<span ng-show="gameStatus == 'not-played'">
-			<button ng-click="checkForGameInFb(search)">Submit Game 1</button>
+			<button ng-click="checkForGameInFb(search, gameStatus)">Submit Game 1</button>
 		</span>
 		<span ng-show="gameStatus == 'played-game'">
 		<br>
 		Your Score:
 		<br>
-		<input type="text" placeholder="560,000">
+		<input type="text" ng-model="userScore" placeholder="560,000">
 		<br>
+		<div id="arcade-info">
 		Played At:
 		<br>
-		<input type="text" placeholder="Arcade Name">
+		<input type="text" list="arcades" name="arcades" ng-model="inputArcade" placeholder="Arcade Name">
+			<datalist id="arcades">
+				<option>Add New Arcade</option>
+				<option ng-repeat="arcadeKey in arcadesArray | filter: inputArcade" value="{{arcadeKey.name}}">
+
+				<!-- append ? -->
+			</datalist>
+			</div>
 		<br>
 		Date:
 		<br>
-		<input type="text" placeholder="2/14/98">
-		<button ng-click="checkForGameInFb()">
+		<input type="text" ng-model="userDate" placeholder="2/14/98">
+		<button ng-click="checkForGameInFb(search, gameStatus, userScore, userArcade, userDate, inputArcade)">
 			Submit Game 2
 		</button>
 		</span>

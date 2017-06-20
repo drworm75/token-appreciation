@@ -1,16 +1,25 @@
 {{currentUser}} Game List
 
 <h1>User Games I've Played</h1>
+<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:true}">
+	{{game.name}}		
+	{{game.year}}
+	<img ng-src="{{game.icon}}"><br>
+	{{game.score}}
+	{{game.arcadeid}}
+	{{game.date}}
 
+
+
+</div>
 
 
 <h1>Games I want to play</h1>
-	<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:false}">
+<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:false}">
 	{{game.name}}		
 	{{game.year}}
-	{{game.giantbomb_id}}
 	<img ng-src="{{game.icon}}">
 
 
 
-	</div>
+</div>

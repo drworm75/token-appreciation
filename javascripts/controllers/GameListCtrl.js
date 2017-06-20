@@ -9,9 +9,9 @@ app.controller('GameListCtrl', function($rootScope, $scope, GameFactory) {
             if (userGameInfo !== null) {
                 Object.keys(userGameInfo).forEach((key) => {
                   userGameInfo[key].id=key;
-                  $scope.myGames[index]["name"] = userGameInfo[key].name;
-                  $scope.myGames[index]["year"] = userGameInfo[key].year;
-                  $scope.myGames[index]["icon"] = userGameInfo[key].icon;
+                  $scope.myGames[index].name = userGameInfo[key].name;
+                  $scope.myGames[index].year = userGameInfo[key].year;
+                  $scope.myGames[index].icon = userGameInfo[key].icon;
                 });
             }
         }).catch((error) => {
@@ -25,7 +25,7 @@ app.controller('GameListCtrl', function($rootScope, $scope, GameFactory) {
             Object.keys($scope.myGames).forEach((key, index) => {
             let userGameId = theGames[index].giantbomb_id;
             getUserGame(userGameId, index);            
-            })
+            });
         }).catch((error) => {
             console.log("getGames error", error);
     	});

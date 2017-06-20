@@ -26,6 +26,18 @@
     "arcade0": {
       "name": "Game Galaxy",
       "address": "3 S Lowry St, Smyrna, TN 37167"
+    },
+    "arcade1": {
+      "name": "Dave and Busters",
+      "address": "3 S Lowry St, Smyrna, TN 37167"
+    },
+    "arcade2": {
+      "name": "Arcade Odessey",
+      "address": "3 S Lowry St, Smyrna, TN 37167"
+    },
+    "arcade3": {
+      "name": "Game To Go",
+      "address": "3 S Lowry St, Smyrna, TN 37167"
     }
   },
   "playedwishlistgames": {
