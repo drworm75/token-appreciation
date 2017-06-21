@@ -10,29 +10,38 @@
 	</button>
 
 	<div ng-show="searched">
-		{{cardName}}
-		{{cardYear}}
+		{{heldGame.name}}
+		{{heldGame.year}}
 		<br>
-		<img src ="{{cardImage}}" height="400px">
-		<input type="radio" name="content" value="not-played" ng-model="gameStatus" ng-change="">Wishlist
-		<input type="radio" name="content" value="played-game" ng-model="gameStatus" >I've Played It
-		<span ng-show="content == 'not-played'">
-			<button ng-click="checkForGameInFb(search)">Submit Game 1</button>
+		<img src ="{{heldGame.image}}" height="400px">
+		<input type="radio" name="content" value="not-played" ng-model="gameStatus">Wishlist
+		<input type="radio" name="content" value="played-game" ng-model="gameStatus">I've Played It
+		<span ng-show="gameStatus == 'not-played'">
+			<button ng-click="checkForGameInFb(search, gameStatus)">Submit Game 1</button>
 		</span>
 		<span ng-show="gameStatus == 'played-game'">
 		<br>
 		Your Score:
 		<br>
-		<input type="text" placeholder="560,000">
+		<input type="text" ng-model="userScore" placeholder="560,000">
 		<br>
-		Played At:
-		<br>
-		<input type="text" placeholder="Arcade Name">
-		<br>
+		<div id="arcade-info">
 		Date:
 		<br>
-		<input type="text" placeholder="2/14/98">
-		<button ng-click="checkForGameInFb()">
+		<input type="text" ng-model="userDate" placeholder="2/14/98">
+		Played At:
+		<br>
+		<input type="text" list="arcades" name="arcades" ng-model="userArcade" placeholder="Arcade Name">
+			<datalist id="arcades">
+				<option ng-repeat="arcadeKey in arcadesArray | filter: inputArcade" value="{{arcadeKey.name}}"></option>
+				<select>New Arcade</select>
+
+				<!-- append ? -->
+			</datalist>
+			<button ng-click="newArcadeView(search, gameStatus, userScore, userArcade, userDate)">Enter New Arcade</button>
+			</div>
+		<br>
+		<button ng-click="checkForGameInFb(search, gameStatus, userScore, userArcade, userDate)">
 			Submit Game 2
 		</button>
 		</span>

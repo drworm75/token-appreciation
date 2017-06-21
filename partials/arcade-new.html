@@ -1,0 +1,25 @@
+<h1>ADD NAME AND ADDRESS TO REGISTER A NEW ARCADE!</h1>
+
+Played At:
+<br>
+<input type="text"  ng-model="newArcade.userArcade" placeholder="Galloping Ghost">
+<br>
+Address:
+<br>
+<input type="text"  ng-model="newArcade.userAddress" placeholder="9415 Ogden Ave, Brookfield, IL 60513" size="50">
+<br>
+Game Played:
+<br>
+{{newArcade.name}}
+<br>
+Your Score:
+<br>
+<input type="text"  ng-model="newArcade.userScore" placeholder="2,600">
+<br>
+Date:
+<br>
+<input type="text"  ng-model="newArcade.userDate" placeholder="2/14/98">
+<button ng-click="button(newArcade)">
+	Submit Game 2
+</button>
+

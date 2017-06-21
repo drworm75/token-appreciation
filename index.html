@@ -12,7 +12,7 @@
  
 </head>
 <body ng-app="TokenApp">
-	<div ng-include="'partials/welcome.html'"></div>
+	<div ng-include="'partials/navbar.html'"></div>
 	<div ng-view></div>
 
 
@@ -29,12 +29,16 @@
 	<script type="text/javascript" src="./javascripts/AppConfig.js"></script>
 	<script type="text/javascript" src="./javascripts/AppConstants.js"></script>
 	<script type="text/javascript" src="./javascripts/factories/GameFactory.js"></script>
+	<script type="text/javascript" src="./javascripts/factories/ShareFactory.js"></script>
 	<script type="text/javascript" src="./javascripts/factories/AuthFactory.js"></script>
 	<script type="text/javascript" src="./javascripts/factories/UserFactory.js"></script>
+	<script type="text/javascript" src="./javascripts/factories/ArcadeFactory.js"></script>
+	<script type="text/javascript" src="./javascripts/controllers/NavCtrl.js"></script>
+	<script type="text/javascript" src="./javascripts/controllers/GameNewCtrl.js"></script>
 	<script type="text/javascript" src="./javascripts/controllers/ArcadeListCtrl.js"></script>
+	<script type="text/javascript" src="./javascripts/controllers/ArcadeNewCtrl.js"></script>
 	<script type="text/javascript" src="./javascripts/controllers/GameViewCtrl.js"></script>
 	<script type="text/javascript" src="./javascripts/controllers/GameListCtrl.js"></script>
 	<script type="text/javascript" src="./javascripts/controllers/AuthCtrl.js"></script>
-	<script type="text/javascript" src="./javascripts/controllers/GameNewCtrl.js"></script>
 </body>
 </html>

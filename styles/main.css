@@ -4,3 +4,6 @@ option {
   white-space: pre;
   min-height: 40px;
   padding: 0px 2px 1px; }
+
+#arcade-info {
+  margin-left: 200px; }

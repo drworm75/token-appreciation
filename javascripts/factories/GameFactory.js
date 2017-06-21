@@ -1,11 +1,10 @@
 app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_CONFIG) {
 
-	let fbAddGameToFb = (newGame) => {
-			console.log("newGame",newGame);
+	let fbCreateWishlistGameObject = (newObject) => {
 	    return $q ((resolve, reject) => {
-	      $http.post(`${FIREBASE_CONFIG.databaseURL}/games.json`, JSON.stringify(newGame))
+	      $http.post(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames.json`, JSON.stringify(newObject))
 	      .then((fbGames) => {
-	      	console.log("Adding game", fbGames);
+	      	console.log("Adding user object", fbGames);
 	        resolve(fbGames);
 	      })
 	      .catch((error) => {
@@ -14,20 +13,72 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 	    });
 	};
 
-	let fbGetGameList = () => {
+	let fbCreatePlayedGameObject = (newObject) => {
+		console.log("Played Obj", newObject)
+	    return $q ((resolve, reject) => {
+	      $http.post(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames.json`, JSON.stringify(newObject))
+	      .then((fbGames) => {
+	      	console.log("Adding user object", fbGames);
+	        resolve(fbGames);
+	      })
+	      .catch((error) => {
+	        reject(error);
+	      });
+	    });
+	};
+
+
+	let fbAddGameToFb = (newGame) => {
+			console.log("newGame",newGame);
+	    return $q ((resolve, reject) => {
+	      $http.post(`${FIREBASE_CONFIG.databaseURL}/games.json`, JSON.stringify(newGame))
+	      .then(() => {
+	      	console.log("New game afer post", newGame.giantbomb_id);
+	        resolve(newGame.giantbomb_id);
+	      })
+	      .catch((error) => {
+	        reject(error);
+	      });
+	    });
+	};
+
+	let fbGetGameList = (userId) => {
 		let gamesFromFb = [];
 		return $q((resolve, reject) => {
-			$http.get(`${FIREBASE_CONFIG.databaseURL}/games.json`)
+			$http.get(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames.json?orderBy="uid"&equalTo="${userId}"`)
 			.then((fbGames) => {
 				let fbGameCollection = fbGames.data;
 				Object.keys(fbGameCollection).forEach((key) => {
 					gamesFromFb.push({
-							"name": fbGameCollection[key].name,
-							"year": fbGameCollection[key].year,
-							"icon": fbGameCollection[key].icon
-						});
+							"uid": fbGameCollection[key].uid,
+							"giantbomb_id": fbGameCollection[key].giantbomb_id,
+							"is_played": fbGameCollection[key].is_played,
+							"score": fbGameCollection[key].score,
+							"arcadeid": fbGameCollection[key].arcadeid,
+							"date": fbGameCollection[key].date
+					});					
 				});
 				resolve(gamesFromFb);
+			})
+			.catch((error) => {
+				reject(error);
+			});
+		});
+	};
+
+let fbGetUserGame = (gameId) => {
+	let userGameInfoFromFb = [];
+	return $q((resolve, reject) => {
+		$http.get(`${FIREBASE_CONFIG.databaseURL}/games.json?orderBy="giantbomb_id"&equalTo="${gameId}"`)
+		.then((fbGames) => {
+			let fbGameCollection = fbGames.data;
+			if (fbGameCollection !== null) {
+		        Object.keys(fbGameCollection).forEach((key) => {
+		          fbGameCollection[key].id=key;
+		          userGameInfoFromFb.push(fbGameCollection[key]);
+		        });
+		    }			
+				resolve(userGameInfoFromFb);
 			})
 			.catch((error) => {
 				reject(error);
@@ -40,7 +91,6 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 		return $q((resolve, reject) => {
 			$http.get(`${FIREBASE_CONFIG.databaseURL}/games.json?orderBy="giantbomb_id"&equalTo="${gbid}"`)
 			.then((fbGames) => {
-				console.log(fbGames);
 				resolve(fbGames);
 			})
 			.catch((error) => {
@@ -68,8 +118,28 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 						});
 					}
 				});
-					 console.log("gameNames", gameNames);
 				resolve(gameNames);
+			})
+			.catch((error) => {
+				reject(error);
+			});
+		});
+	};	
+
+	let fbSearchFirebaseArcades = (search) => {
+		let arcadeNames = [];
+		return $q((resolve, reject) => {
+			$http.get(`${FIREBASE_CONFIG.databaseURL}/arcades.json?orderBy="name"&equalTo="${search}"`)
+			.then((fbInfo) => {
+				let fbArcadeCollection = fbInfo.data;
+				if (fbArcadeCollection !== null) {
+			        Object.keys(fbArcadeCollection).forEach((key) => {
+			          arcadeNames.push({
+			          	"name": fbArcadeCollection[key].name
+			          });
+		        });
+		    }	
+				resolve(arcadeNames);
 			})
 			.catch((error) => {
 				reject(error);
@@ -77,10 +147,16 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 		});
 	};
 
+
+
 	return {
 
 		gbSearchGiantBomb: gbSearchGiantBomb,
+		fbSearchFirebaseArcades: fbSearchFirebaseArcades,
+		fbCreateWishlistGameObject: fbCreateWishlistGameObject,
+		fbCreatePlayedGameObject: fbCreatePlayedGameObject,
 		fbGetGameList: fbGetGameList,
+		fbGetUserGame: fbGetUserGame,
 		fbCheckForGameInFb: fbCheckForGameInFb,
 		fbAddGameToFb: fbAddGameToFb
 	};

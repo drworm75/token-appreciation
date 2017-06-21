@@ -1,8 +1,48 @@
-<h1>All Games</h1>
-<div ng-repeat="keys in myGames">
-	{{keys.name}}
-	{{keys.year}}
-	<img ng-src="{{keys.icon}}">
+{{currentUser}} Game List
+
+<h1>User Games I've Played</h1>
+<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:true}">
+	<h3 ng-show="!editing">
+
+	{{game.name}}		
+	{{game.year}}
+	<img ng-src="{{game.icon}}">
+    <button class="btn btn-sm btn-info edit-btn" ng-click="editing = true;">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    </button>
+	<br>
+	{{game.score}}
+	{{game.arcadeid}}
+	{{game.date}}
+
+	</h3>
+
+	<div ng-show="editing">
+		{{game.name}}		
+		{{game.year}}
+		<img ng-src="{{game.icon}}">
+        <input ng-model="game.score" type="text">
+        <input ng-model="game.arcadeid" type="text">
+        <input ng-model="game.score" type="text">
+        <div class="pull-right">
+            <button class="btn btn-sm btn-success" ng-click="editing = false; changeBoard(board.boardId, board.title)">
+                <i class=" fa fa-save"></i>
+            </button>
+        <button class="btn btn-sm btn-danger" ng-click="deleteBoard(board.boardId)"><i class="fa fa-trash"></i></button>
+        </div>
+    </div>
+
+
 
 </div>
 
+
+<h1>Games I want to play</h1>
+<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:false}">
+	{{game.name}}		
+	{{game.year}}
+	<img ng-src="{{game.icon}}">
+
+
+
+</div>
