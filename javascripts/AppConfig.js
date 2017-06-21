@@ -59,6 +59,10 @@ app.config(function($routeProvider) {
     templateUrl: 'partials/arcade-new.html',
     controller: 'ArcadeNewCtrl'
     })
+  .when("/leaderboard/:name/:giantbomb_id",{
+    templateUrl: 'partials/leaderboard.html',
+    controller: 'LeaderboardCtrl',
+  })
 	.when('/game/:gameid/view',{
 		templateUrl: 'partials/game-view.html',
 		controller: 'GameViewCtrl'
