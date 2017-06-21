@@ -1,0 +1,6 @@
+<h2>{{name}} Leaderboard</h2>
+	<h3 ng-repeat="key in scoresArray | orderBy: 'score'">
+	{{key.score}}
+	{{key.uid}}
+	{{key.arcadeid}}
+	</h3>
