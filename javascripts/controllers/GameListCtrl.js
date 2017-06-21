@@ -1,4 +1,4 @@
-app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFactory, ArcadeFactory, FIREBASE_CONFIG) {
+app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFactory, ArcadeFactory, PlayedWishlistGamesFactory, FIREBASE_CONFIG) {
     $scope.header = "Game List";
     $scope.gameTitle = "Root Beer Tapper";
     $scope.currentUser = $rootScope.user.name;
@@ -35,9 +35,9 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
     };
 
     let getGames = () => {
-        console.log("routeParams", $routeParams);
         GameFactory.fbGetGameList($rootScope.user.uid).then((theGames) => {
             $scope.myGames = theGames;
+            console.log("myGames", $scope.myGames);
             Object.keys($scope.myGames).forEach((key, index) => {
             let userGameId = theGames[index].giantbomb_id;
             getUserGame(userGameId, index);            
@@ -52,6 +52,18 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
     };
 
     getGames();
+
+
+    $scope.deleteGameFromProfile = (id) => {
+        console.log("Delete Button Pressed");
+        console.log("id", id);
+        PlayedWishlistGamesFactory.fbDeleteGameFromProfile(id).then(() => {
+            getGames();
+        })
+        .catch((error) => {
+            console.log("deleteContact error", error);
+        });
+    };
 
 
 

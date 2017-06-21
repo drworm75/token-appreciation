@@ -1,76 +1,160 @@
 {
-  "games": {
-    "game0": {
-      "giantbomb_id": "7912",
-      "icon": "https://www.giantbomb.com/api/image/square_avatar/956016-2598043807_8825757262.jpg",
-      "image": "https://www.giantbomb.com/api/image/scale_small/956016-2598043807_8825757262.jpg",
-      "name": "Tapper",
-      "year": "1983"
+  "arcades" : {
+    "arcade0" : {
+      "address" : "3 S Lowry St, Smyrna, TN 37167",
+      "name" : "Game Galaxy"
     },
-    "game1": {
-      "giantbomb_id": "6332",
-      "icon": "https://www.giantbomb.com/api/image/square_avatar/2367786-a2600_mspacman.jpg",
-      "image": "https://www.giantbomb.com/api/image/scale_small/2367786-a2600_mspacman.jpg",
-      "name": "Ms. Pac-Man",
-      "year": "1981"  
+    "arcade1" : {
+      "address" : "3 S Lowry St, Smyrna, TN 37167",
+      "name" : "Dave and Busters"
     },
-    "game2": {
-      "giantbomb_id": "88849",
-      "icon": "https://www.giantbomb.com/api/image/square_avatar/1325892-cliffhanger_cabinet.jpg",
-      "image": "https://www.giantbomb.com/api/image/scale_small/1325892-cliffhanger_cabinet.jpg",      
-      "name": "Cliff Hanger",
-      "year": "1983"  
+    "arcade2" : {
+      "address" : "3 S Lowry St, Smyrna, TN 37167",
+      "name" : "Arcade Odessey"
+    },
+    "arcade3" : {
+      "address" : "3 S Lowry St, Smyrna, TN 37167",
+      "name" : "Game To Go"
     }
   },
-  "arcades": {
-    "arcade0": {
-      "name": "Game Galaxy",
-      "address": "3 S Lowry St, Smyrna, TN 37167"
+  "games" : {
+    "-KnBCvWwPD1LRj-OVvM-" : {
+      "giantbomb_id" : "15480",
+      "icon" : "https://www.giantbomb.com/api/image/square_avatar/2686512-3337282285-18002.jpg",
+      "image" : "https://www.giantbomb.com/api/image/scale_small/2686512-3337282285-18002.jpg",
+      "name" : "Yie Ar Kung-Fu",
+      "year" : "1985"
     },
-    "arcade1": {
-      "name": "Dave and Busters",
-      "address": "3 S Lowry St, Smyrna, TN 37167"
+    "-KnBDOr6qdHFaNETviiK" : {
+      "giantbomb_id" : "27134",
+      "icon" : "https://www.giantbomb.com/api/image/square_avatar/1064101-timber.jpg",
+      "image" : "https://www.giantbomb.com/api/image/scale_small/1064101-timber.jpg",
+      "name" : "Timber",
+      "year" : "1984"
     },
-    "arcade2": {
-      "name": "Arcade Odessey",
-      "address": "3 S Lowry St, Smyrna, TN 37167"
+    "-KnBDo6bpQ9uLPyl64Mn" : {
+      "giantbomb_id" : "23098",
+      "icon" : "https://www.giantbomb.com/api/image/square_avatar/514161-mach3_arc_00.png",
+      "image" : "https://www.giantbomb.com/api/image/scale_small/514161-mach3_arc_00.png",
+      "name" : "M.A.C.H. 3",
+      "year" : "1983"
     },
-    "arcade3": {
-      "name": "Game To Go",
-      "address": "3 S Lowry St, Smyrna, TN 37167"
+    "-KnBDwfo09RGnZ2WcH49" : {
+      "giantbomb_id" : "14950",
+      "icon" : "https://www.giantbomb.com/api/image/square_avatar/212539-death_race.jpg",
+      "image" : "https://www.giantbomb.com/api/image/scale_small/212539-death_race.jpg",
+      "name" : "Death Race",
+      "year" : "1976"
+    },
+    "game0" : {
+      "giantbomb_id" : "7912",
+      "icon" : "https://www.giantbomb.com/api/image/square_avatar/956016-2598043807_8825757262.jpg",
+      "image" : "https://www.giantbomb.com/api/image/scale_small/956016-2598043807_8825757262.jpg",
+      "name" : "Tapper",
+      "year" : "1983"
+    },
+    "game1" : {
+      "giantbomb_id" : "6332",
+      "icon" : "https://www.giantbomb.com/api/image/square_avatar/2367786-a2600_mspacman.jpg",
+      "image" : "https://www.giantbomb.com/api/image/scale_small/2367786-a2600_mspacman.jpg",
+      "name" : "Ms. Pac-Man",
+      "year" : "1981"
+    },
+    "game2" : {
+      "giantbomb_id" : "88849",
+      "icon" : "https://www.giantbomb.com/api/image/square_avatar/1325892-cliffhanger_cabinet.jpg",
+      "image" : "https://www.giantbomb.com/api/image/scale_small/1325892-cliffhanger_cabinet.jpg",
+      "name" : "Cliff Hanger",
+      "year" : "1983"
+    },
+    "game3" : {
+      "giantbomb_id" : "9766",
+      "icon" : "https://www.giantbomb.com/api/image/square_avatar/2361924-nes_kidniki.jpg",
+      "image" : "https://www.giantbomb.com/api/image/scale_small/2361924-nes_kidniki.jpg",
+      "name" : "Kid Niki: Radical Ninja",
+      "year" : "1983"
     }
   },
-  "playedwishlistgames": {
-    "playedwishlistgames0": {
-     "uid": "d2aCRHsWLbQ5ye61KguReXmDKpG3",
-     "giantbomb_id": "88849",
-     "is_played": false,
-     "score": "",
-     "arcadeid": "",
-     "date": ""
-   },
-   "playedwishlistgames1": {
-     "uid": "d2aCRHsWLbQ5ye61KguReXmDKpG3",
-     "giantbomb_id": "6332",
-     "is_played": true,
-     "score": "1,234,300",
-     "arcadeid": "arcade2",
-     "date": "4/12/05"
-   },
-  "playedwishlistgames2": {
-     "uid": "d2aCRHsWLbQ5ye61KguReXmDKpG3",
-     "giantbomb_id": "7912",
-     "is_played": true,
-     "score": "37,300",
-     "arcadeid": "arcade0",
-     "date": "5/1/13"
-   }
-
-     },
-  "users": {
-    "KmqVkJC6kH8VOh1wzb9": {
-      "username": "a",
-      "uid": "d2aCRHsWLbQ5ye61KguReXmDKpG3"
+  "playedwishlistgames" : {
+    "-KnBCvYd2h2iV-7kVZmU" : {
+      "arcadeid" : "Game Galaxy",
+      "date" : "6/13/16",
+      "giantbomb_id" : "15480",
+      "is_played" : true,
+      "score" : "345,000",
+      "uid" : "sFf6jereqrS1QDWlnFGikSHbDKv1"
+    },
+    "-KnBDOsuGuFquu14FYQt" : {
+      "arcadeid" : "Arcade Odessey",
+      "date" : "1/13/16",
+      "giantbomb_id" : "27134",
+      "is_played" : true,
+      "score" : "25,000",
+      "uid" : "sFf6jereqrS1QDWlnFGikSHbDKv1"
+    },
+    "-KnBDo88W0ksN6qkbLPh" : {
+      "giantbomb_id" : "23098",
+      "is_played" : false,
+      "uid" : "sFf6jereqrS1QDWlnFGikSHbDKv1"
+    },
+    "-KnBDwhkqI2fTBHTp90f" : {
+      "giantbomb_id" : "14950",
+      "is_played" : false,
+      "uid" : "sFf6jereqrS1QDWlnFGikSHbDKv1"
+    },
+    "-KnBEJcccmA6vLK3WiPv" : {
+      "arcadeid" : "Dave and Busters",
+      "date" : "3/15/17",
+      "giantbomb_id" : "6332",
+      "is_played" : true,
+      "score" : "145,000",
+      "uid" : "sFf6jereqrS1QDWlnFGikSHbDKv1"
+    },
+    "-KnBEigfUJ1X5_ProjPl" : {
+      "arcadeid" : "Arcade Odessey",
+      "date" : "6/16/17",
+      "giantbomb_id" : "6332",
+      "is_played" : true,
+      "score" : "29,000",
+      "uid" : "pCDpgISWjqYt9D2qWkin5E6TgVg1"
+    },
+    "playedwishlistgames0" : {
+      "arcadeid" : "",
+      "date" : "",
+      "giantbomb_id" : "88849",
+      "is_played" : false,
+      "score" : "",
+      "uid" : "d2aCRHsWLbQ5ye61KguReXmDKpG3"
+    },
+    "playedwishlistgames1" : {
+      "arcadeid" : "arcade2",
+      "date" : "4/12/05",
+      "giantbomb_id" : "6332",
+      "is_played" : true,
+      "score" : "1,234,300",
+      "uid" : "d2aCRHsWLbQ5ye61KguReXmDKpG3"
+    },
+    "playedwishlistgames2" : {
+      "arcadeid" : "arcade0",
+      "date" : "5/1/13",
+      "giantbomb_id" : "7912",
+      "is_played" : true,
+      "score" : "37,300",
+      "uid" : "d2aCRHsWLbQ5ye61KguReXmDKpG3"
+    }
+  },
+  "users" : {
+    "-KnBCcCOb1eJHp1TF2IQ" : {
+      "uid" : "sFf6jereqrS1QDWlnFGikSHbDKv1",
+      "username" : "Bennett"
+    },
+    "-KnBEYTcMOgBxSYCQaQt" : {
+      "uid" : "pCDpgISWjqYt9D2qWkin5E6TgVg1",
+      "username" : "Chad"
+    },
+    "KmqVkJC6kH8VOh1wzb9" : {
+      "uid" : "d2aCRHsWLbQ5ye61KguReXmDKpG3",
+      "username" : "Avery"
     }
   }
 }

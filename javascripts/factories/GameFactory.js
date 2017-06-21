@@ -55,7 +55,8 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 							"is_played": fbGameCollection[key].is_played,
 							"score": fbGameCollection[key].score,
 							"arcadeid": fbGameCollection[key].arcadeid,
-							"date": fbGameCollection[key].date
+							"date": fbGameCollection[key].date,
+							"played_id": key
 					});					
 				});
 				resolve(gamesFromFb);
@@ -96,8 +97,8 @@ let fbGetUserGame = (gameId) => {
 			.catch((error) => {
 				reject(error);
 			});
-	});
-};
+		});
+	};
 	
 	let gbSearchGiantBomb = (search) => {
 		let gameNames = [];
