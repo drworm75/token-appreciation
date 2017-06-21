@@ -1,10 +1,12 @@
-app.controller('GameNewCtrl', function($rootScope, $scope, GameFactory, ArcadeFactory) {
+app.controller('GameNewCtrl', function($location, $rootScope, $scope, GameFactory, ArcadeFactory, ShareFactory) {
 
 	$scope.returnedGames = "";
   $scope.header = "Game New";
   $scope.gameTitle = "Exciting New Pac-Man Plus";
+  $scope.heldGame = {};
   $scope.gamesArray = [];
   $scope.arcadesArray = [];
+  $scope.playedObj = {};
   $scope.newGameDataForUser = {};
 
  
@@ -21,10 +23,8 @@ app.controller('GameNewCtrl', function($rootScope, $scope, GameFactory, ArcadeFa
 
   $scope.card = (passedName) => {
     $scope.gamesArray.forEach((gameObj) => {
-    	if(gameObj.name === passedName) {
-    		$scope.cardName = gameObj.name;
-    		$scope.cardYear = gameObj.year;
-    		$scope.cardImage = gameObj.image;
+      if(gameObj.name === passedName) {
+        $scope.heldGame = gameObj;
     	}
     });
   };
@@ -68,8 +68,6 @@ app.controller('GameNewCtrl', function($rootScope, $scope, GameFactory, ArcadeFa
     let gbIdToCheck = "";
     let thisGamesGbId = "";
     let holdGameObj = {};
-    console.log("userDate", userDate);
-    console.log("userArcade", userArcade);
     if (gameStatus === "played-game") {
         $scope.newGameDataForUser.is_played = true;
         $scope.newGameDataForUser.score = userScore;
@@ -129,9 +127,29 @@ app.controller('GameNewCtrl', function($rootScope, $scope, GameFactory, ArcadeFa
     GameFactory.fbSearchFirebaseArcades(inputArcade).then((fbArcades) => {
       $scope.arcadesArray = fbArcades;
     }).catch((error) => {
-      console.log("searchGiantBomb error", error);
+      console.log("arcadeSearch error", error);
     });
   };
+
+      $scope.newArcadeView = (userSearch, gameStatus, userScore, userArcade, userDate) => {
+        console.log("newArcadeView Pressed");
+        let passingInfo = {
+          userSearch: userSearch,
+          userScore: userScore,
+          userDate: userDate,
+          userArcade: userArcade,
+          gameStatus: gameStatus,
+          giantbomb_id: $scope.heldGame.giantbomb_id,
+          name: $scope.heldGame.name,
+          icon: $scope.heldGame.icon,
+          image: $scope.heldGame.image,
+          year: $scope.heldGame.year
+        };
+        ShareFactory.saveGame(passingInfo);
+
+      $location.url('/arcade/new');
+    }
+
 
 
 

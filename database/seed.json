@@ -52,15 +52,24 @@
    "playedwishlistgames1": {
      "uid": "d2aCRHsWLbQ5ye61KguReXmDKpG3",
      "giantbomb_id": "6332",
-     "is_played": false,
-     "score": "",
-     "arcadeid": "",
-     "date": ""
+     "is_played": true,
+     "score": "1,234,300",
+     "arcadeid": "arcade2",
+     "date": "4/12/05"
+   },
+  "playedwishlistgames2": {
+     "uid": "d2aCRHsWLbQ5ye61KguReXmDKpG3",
+     "giantbomb_id": "7912",
+     "is_played": true,
+     "score": "37,300",
+     "arcadeid": "arcade0",
+     "date": "5/1/13"
    }
+
      },
   "users": {
     "KmqVkJC6kH8VOh1wzb9": {
-      "name": "a",
+      "username": "a",
       "uid": "d2aCRHsWLbQ5ye61KguReXmDKpG3"
     }
   }

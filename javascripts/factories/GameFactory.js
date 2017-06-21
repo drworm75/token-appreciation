@@ -14,6 +14,7 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 	};
 
 	let fbCreatePlayedGameObject = (newObject) => {
+		console.log("Played Obj", newObject)
 	    return $q ((resolve, reject) => {
 	      $http.post(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames.json`, JSON.stringify(newObject))
 	      .then((fbGames) => {
@@ -90,7 +91,6 @@ let fbGetUserGame = (gameId) => {
 		return $q((resolve, reject) => {
 			$http.get(`${FIREBASE_CONFIG.databaseURL}/games.json?orderBy="giantbomb_id"&equalTo="${gbid}"`)
 			.then((fbGames) => {
-				console.log(fbGames);
 				resolve(fbGames);
 			})
 			.catch((error) => {
@@ -118,7 +118,6 @@ let fbGetUserGame = (gameId) => {
 						});
 					}
 				});
-					 console.log("gameNames", gameNames);
 				resolve(gameNames);
 			})
 			.catch((error) => {
@@ -147,6 +146,8 @@ let fbGetUserGame = (gameId) => {
 			});
 		});
 	};
+
+
 
 	return {
 
