@@ -26,6 +26,7 @@ app.factory("UserFactory", function($q, $http, FIREBASE_CONFIG) {
 	          Object.keys(userObject.data).forEach((key) => {
 	            users.push(userObject.data[key]);
 	          });
+	          console.log(users[0]);
 	          resolve(users[0]);
 	        })
 	        .catch((error) => {
@@ -34,5 +35,7 @@ app.factory("UserFactory", function($q, $http, FIREBASE_CONFIG) {
 	    });
 	  };
 
-	  return {addUser:addUser, getUser:getUser};
+	  return {
+	  	addUser:addUser, getUser:getUser
+	  };
 	});

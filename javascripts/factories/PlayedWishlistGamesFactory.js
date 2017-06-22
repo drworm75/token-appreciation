@@ -34,10 +34,31 @@ app.factory("PlayedWishlistGamesFactory", function($http, $q, FIREBASE_CONFIG) {
 		});
 	};
 
+	let fbChangeScores = (currentObj) => {
+	    return $q((resolve, reject) => {
+      $http.put(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames/${currentObj.played_id}.json`, JSON.stringify({
+            arcadeid: currentObj.arcadeid,
+            date: currentObj.date,
+            giantbomb_id: currentObj.giantbomb_id,
+            is_played: currentObj.is_played,
+            score: currentObj.score,
+            uid: currentObj.uid
+        })
+		).then((resultz) => {
+			resolve(resultz);
+		})
+		.catch((error) => {
+		    reject(error);
+		  });
+		});
+	};
+
+
 
   return {
   	fbDeleteGameFromProfile: fbDeleteGameFromProfile,
-  	fbGetLeaderboardScores: fbGetLeaderboardScores
+  	fbGetLeaderboardScores: fbGetLeaderboardScores,
+  	fbChangeScores: fbChangeScores
   }
 
 });

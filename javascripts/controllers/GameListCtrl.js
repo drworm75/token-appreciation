@@ -4,6 +4,7 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
     $scope.currentUser = $rootScope.user.name;
     $scope.myGames = [];
     $scope.myArcades = [];
+    $scope.currentPlayedObj = {};
 
     let getUserGame = (gameId, index) => {
         GameFactory.fbGetUserGame(gameId).then((userGameInfo) => {
@@ -20,7 +21,7 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
         });
     };
 
-        let getArcadeName = (arcadeId, index) => {
+    let getArcadeName = (arcadeId, index) => {
         ArcadeFactory.fbGetArcadeName(arcadeId).then((arcadeInfo) => {
         console.log("arcadeInfo", arcadeInfo);
             if (arcadeInfo !== null) {
@@ -46,6 +47,7 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
             let gameArcadeId = theGames[index].arcadeid;
             getArcadeName(gameArcadeId, index);            
             });
+            console.log ("myGames", $scope.myGames);
         }).catch((error) => {
             console.log("getGames error", error);
     	});
@@ -65,6 +67,33 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
         });
     };
 
+        $scope.editGame = (played_id) => {
+            $scope.myGames.forEach((gameObj) => {
+          if(gameObj.played_id === played_id) {
+            $scope.currentPlayedObj = gameObj;
+            }
+            console.log("currentPlayedObj", $scope.currentPlayedObj);
+
+        });
+    };
+
+    $scope.changeScore = ()  => {
+        PlayedWishlistGamesFactory.fbChangeScores($scope.currentPlayedObj).then(() => {
+
+        }).catch(() => {
+            console.log("changeScore", error);
+        })
+        // let objToEdit = {
+        //     arcadeid: $scope.currentPlayedObj.arcadeid,
+        //     date: $scope.currentPlayedObj.date,
+        //     giantbomb_id: $scope.currentPlayedObj.giantbomb_id,
+        //     is_played: $scope.currentPlayedObj.is_played,
+        //     score: $scope.currentPlayedObj.score,
+        //     uid: $scope.currentPlayedObj.uid,
+        // }
+        // console.log("objToEdit", objToEdit);
+
+    };
 
 
 
