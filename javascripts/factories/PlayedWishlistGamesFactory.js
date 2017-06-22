@@ -59,6 +59,6 @@ app.factory("PlayedWishlistGamesFactory", function($http, $q, FIREBASE_CONFIG) {
   	fbDeleteGameFromProfile: fbDeleteGameFromProfile,
   	fbGetLeaderboardScores: fbGetLeaderboardScores,
   	fbChangeScores: fbChangeScores
-  }
+  };
 
 });

@@ -14,7 +14,7 @@ app.factory("GameFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_
 	};
 
 	let fbCreatePlayedGameObject = (newObject) => {
-		console.log("Played Obj", newObject)
+		console.log("Played Obj", newObject);
 	    return $q ((resolve, reject) => {
 	      $http.post(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames.json`, JSON.stringify(newObject))
 	      .then((fbGames) => {
