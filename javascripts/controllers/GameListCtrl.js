@@ -3,7 +3,9 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
     $scope.gameTitle = "Root Beer Tapper";
     $scope.currentUser = $rootScope.user.name;
     $scope.myGames = [];
-    $scope.myArcades = [];
+    $scope.scoresArray = [];
+    $scope.arcadesArray = [];
+    $scope.currentPlayedObj = {};
 
     let getUserGame = (gameId, index) => {
         GameFactory.fbGetUserGame(gameId).then((userGameInfo) => {
@@ -16,36 +18,46 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
                 });
             }
         }).catch((error) => {
-
+            console.log("gerUserGame error", error);
         });
     };
 
-        let getArcadeName = (arcadeId, index) => {
-        ArcadeFactory.fbGetArcadeName(arcadeId).then((arcadeInfo) => {
-        console.log("arcadeInfo", arcadeInfo);
-            if (arcadeInfo !== null) {
-                Object.keys(arcadeInfo).forEach((key) => {
-                  arcadeInfo[key].id=key;
-                  $scope.myArcades[index].name = arcadeInfo[key].name;
+    let matchArcades = () => {
+        $scope.scoresArray.forEach((scoreObj, index) => {
+            $scope.arcadesArray.forEach((arcadeObj) => {
+                if (scoreObj.arcadeid === arcadeObj.arcadeid) {
+                    $scope.scoresArray[index].arcade_name = arcadeObj.name;
+                }
+            });
+        });
+    };
+
+    let getArcadeNames = () => {
+        $scope.scoresArray.forEach((gameObj) => {
+            if (gameObj.arcadeid !== "") {
+                ArcadeFactory.fbGetArcadeName(gameObj.arcadeid).then((fbArcades) => {
+                    $scope.arcadesArray.push(fbArcades);
+                    matchArcades();
+                }).catch((error) => {
+                    console.log("getUserNames", error);
                 });
             }
-        }).catch((error) => {
-
-        });
+        }); 
     };
 
     let getGames = () => {
         GameFactory.fbGetGameList($rootScope.user.uid).then((theGames) => {
             $scope.myGames = theGames;
-            console.log("myGames", $scope.myGames);
+            $scope.scoresArray = $scope.myGames;
             Object.keys($scope.myGames).forEach((key, index) => {
-            let userGameId = theGames[index].giantbomb_id;
-            getUserGame(userGameId, index);            
+                let userGameId = theGames[index].giantbomb_id;
+                getUserGame(userGameId, index);            
             });
             Object.keys($scope.myGames).forEach((key, index) => {
-            let gameArcadeId = theGames[index].arcadeid;
-            getArcadeName(gameArcadeId, index);            
+                let gameArcadeId = theGames[index].arcadeid;
+                // getArcadeName(gameArcadeId, index);            
             });
+            getArcadeNames();
         }).catch((error) => {
             console.log("getGames error", error);
     	});
@@ -53,19 +65,27 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
 
     getGames();
 
-
     $scope.deleteGameFromProfile = (id) => {
-        console.log("Delete Button Pressed");
-        console.log("id", id);
         PlayedWishlistGamesFactory.fbDeleteGameFromProfile(id).then(() => {
             getGames();
         })
         .catch((error) => {
-            console.log("deleteContact error", error);
+            console.log("deleteGameFromProfile error", error);
         });
     };
 
+    $scope.editGame = (played_id) => {
+        $scope.myGames.forEach((gameObj) => {
+            if(gameObj.played_id === played_id) {
+                $scope.currentPlayedObj = gameObj;
+            }
+        });
+    };
 
-
-
+    $scope.changeScore = ()  => {
+        PlayedWishlistGamesFactory.fbChangeScores($scope.currentPlayedObj).then(() => {
+        }).catch(() => {
+            console.log("changeScore error", error);
+        });
+    };
 });

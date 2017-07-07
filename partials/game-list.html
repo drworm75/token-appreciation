@@ -7,12 +7,12 @@
 	<a ng-href="#!/leaderboard/{{game.name}}/{{game.giantbomb_id}}">{{game.name}}</a>		
 	{{game.year}}
 	<img ng-src="{{game.icon}}">
-    <button class="btn btn-sm btn-info edit-btn" ng-click="editing = true;">
+    <button class="btn btn-sm btn-info edit-btn" ng-click="editing = true; editGame(game.played_id)">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     </button>
 	<br>
 	{{game.score}}
-	{{game.arcadeid}}
+	{{game.arcade_name}}
 	{{game.date}}
 
 
@@ -22,11 +22,11 @@
 		{{game.name}}		
 		{{game.year}}
 		<img ng-src="{{game.icon}}">
-        <input ng-model="game.score" type="text">
-        <input ng-model="game.arcadeid" type="text">
-        <input ng-model="game.score" type="text">
+        <input ng-model="currentPlayedObj.score" type="text">
+        <input ng-model="currentPlayedObj.arcadeid" type="text">
+        <input ng-model="currentPlayedObj.date" type="text">
         <div class="pull-right">
-            <button class="btn btn-sm btn-success" ng-click="editing = false; changeBoard(board.boardId, board.title)">
+            <button class="btn btn-sm btn-success" ng-click="editing = false; changeScore()">
                 <i class=" fa fa-save"></i>
             </button>
         <button class="btn btn-sm btn-danger" ng-click="deleteGameFromProfile(game.played_id)"><i class="fa fa-trash"></i></button>

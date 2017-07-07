@@ -1,6 +1,13 @@
-<h2>{{name}} Leaderboard</h2>
-	<h3 ng-repeat="key in scoresArray | orderBy: 'score'">
-	{{key.score}}
-	{{key.uid}}
-	{{key.arcadeid}}
-	</h3>
+<div class="leaderboard">
+	<div class="col-sm-6 col-sm-offset-3">
+		<h2 class="text-center">{{name}} Leaderboard</h2>
+		<div class="row">
+			<h3 ng-repeat="key in scoresArray | orderBy: 'score'">
+			<div class="col-sm-3">{{key.score}}</div>
+			<div class="col-sm-3">{{key.username}}</div>
+			<div class="col-sm-6">{{key.arcade_name}}</div>
+			</h3>
+		</div>
+	</div>
+</div>
+
