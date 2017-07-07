@@ -1,7 +1,6 @@
-.auth {
-	background-image: url("/images/neon-bg.jpg");
-	height: 100vh;
-}
+// font-family: 'Press Start 2P', cursive;
+@import "color";
+@import "font";
 
 option {
     font-weight: normal;
@@ -11,6 +10,36 @@ option {
     padding: 0px 2px 1px;
 }
 
+#rare-games {
+	width: 100vw;
+}
+
+.auth-image {
+    position: relative;
+}
+
+.auth-container {
+    position: absolute;
+    top: 150px;
+}
+
+.sm-mar-btm {
+    margin-bottom: 10px;
+}
+
+.navbar {
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 0px;
+    border: 1px solid transparent;
+}
+
+.auth {
+	background-image: url("/images/neon-bg.jpg");
+	height: 100vh;
+}
+
+
 #arcade-info {
 	margin-left: 200px;
 }
@@ -18,5 +47,10 @@ option {
 .leaderboard {
 	background-image: url("/images/galaga-bg.jpeg");
 	height: 100vh;
+}
+
+.retro {
+    // font-family: 'Press Start 2P', cursive;
+    font-family: $old-school;
 }
 
