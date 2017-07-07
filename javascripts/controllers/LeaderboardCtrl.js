@@ -1,16 +1,15 @@
-app.controller('LeaderboardCtrl', function($scope, $routeParams, UserFactory, PlayedWishlistGamesFactory, ArcadeFactory) {
+app.controller('LeaderboardCtrl', function($scope, $routeParams, UserFactory, PlayedWishlistGamesFactory, ArcadeFactory, BackgroundFactory) {
 
     $scope.giantbomb_id =$routeParams.giantbomb_id;
     $scope.name = $routeParams.name;
     $scope.scoresArray = [];
     $scope.usersArray = [];
-    $scope.arcadeArray = [];
+    $scope.arcadesArray = [];
 
     let matchUsers = () => {
         $scope.scoresArray.forEach((scoreObj, index) => {
             $scope.usersArray.forEach((userObj) => {
-                console.log("score",scoreObj);
-                console.log("user",userObj);
+
                 if (scoreObj.uid === userObj.uid) {
                     $scope.scoresArray[index].username = userObj.username;
                 }
@@ -18,25 +17,33 @@ app.controller('LeaderboardCtrl', function($scope, $routeParams, UserFactory, Pl
         });
     };
 
-    // let getArcadeNames = () => {
-    //     $scope.scoresArray.forEach((gameObj) => {
-    //      console.log("getArcades gameObj", gameObj.arcadeid);
-    //      // ArcadeFactory.fbGetArcadeName(gameObj.arcadeid).then((fbUsers) => {
-    //   //      $scope.usersArray.push(fbUsers);
-    //      //  console.log("arcadeArray", $scope.arcadeArray);
-    //      //     matchUsers();
-    //   //      }).catch((error) => {
-    //   //        console.log("getUserNames", error);
-    //   //      });
-    //      }); 
-    //     };
+    let matchArcades = () => {
+
+        $scope.scoresArray.forEach((scoreObj, index) => {
+            $scope.arcadesArray.forEach((arcadeObj) => {
+                if (scoreObj.arcadeid === arcadeObj.arcadeid) {
+                    $scope.scoresArray[index].arcade_name = arcadeObj.name;
+                }
+            });
+        });
+    };
+
+    let getArcadeNames = () => {
+        $scope.scoresArray.forEach((gameObj) => {
+         ArcadeFactory.fbGetArcadeName(gameObj.arcadeid).then((fbArcades) => {
+           $scope.arcadesArray.push(fbArcades);
+             matchArcades();
+           }).catch((error) => {
+             console.log("getUserNames", error);
+           });
+         }); 
+        };
 
 
     let getUserNames = () => {
         $scope.scoresArray.forEach((gameObj) => {
             UserFactory.getUser(gameObj.uid).then((fbUsers) => {
                 $scope.usersArray.push(fbUsers);
-                console.log("usersArray", $scope.usersArray);
                 matchUsers();
             }).catch((error) => {
                 console.log("getUserNames", error);
@@ -48,11 +55,18 @@ app.controller('LeaderboardCtrl', function($scope, $routeParams, UserFactory, Pl
         PlayedWishlistGamesFactory.fbGetLeaderboardScores($routeParams.giantbomb_id).then((fbScores) => {
         $scope.scoresArray = fbScores;
             getUserNames();
+            getArcadeNames();
         }).catch((error) => {
             console.log("arcadeError", error);
         });
     };
 
     getLeaderboardScores();
+
+    let loadBgImg = () => {
+        this.getBgImg = BackgroundFactory.getBgImg;
+    };
+
+    loadBgImg();
 
 });

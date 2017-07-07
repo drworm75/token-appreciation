@@ -18,7 +18,6 @@ app.factory("PlayedWishlistGamesFactory", function($http, $q, FIREBASE_CONFIG) {
 		return $q((resolve, reject) => {
 			$http.get(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames.json?orderBy="giantbomb_id"&equalTo="${gbid}"`)
 		.then((fbGames) => {
-			console.log("fbGames from Factory", fbGames);
 			let fbGameCollection = fbGames.data;
 			if (fbGameCollection !== null) {
 		        Object.keys(fbGameCollection).forEach((key) => {

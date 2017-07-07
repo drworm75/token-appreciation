@@ -3,7 +3,8 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
     $scope.gameTitle = "Root Beer Tapper";
     $scope.currentUser = $rootScope.user.name;
     $scope.myGames = [];
-    $scope.myArcades = [];
+    $scope.scoresArray = [];
+    $scope.arcadesArray = [];
     $scope.currentPlayedObj = {};
 
     let getUserGame = (gameId, index) => {
@@ -21,30 +22,42 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
         });
     };
 
-    let getArcadeName = (arcadeId, index) => {
-        ArcadeFactory.fbGetArcadeName(arcadeId).then((arcadeInfo) => {
-            if (arcadeInfo !== null) {
-                Object.keys(arcadeInfo).forEach((key) => {
-                    arcadeInfo[key].id=key;
-                    $scope.myArcades[index].name = arcadeInfo[key].name;
+    let matchArcades = () => {
+        $scope.scoresArray.forEach((scoreObj, index) => {
+            $scope.arcadesArray.forEach((arcadeObj) => {
+                if (scoreObj.arcadeid === arcadeObj.arcadeid) {
+                    $scope.scoresArray[index].arcade_name = arcadeObj.name;
+                }
+            });
+        });
+    };
+
+    let getArcadeNames = () => {
+        $scope.scoresArray.forEach((gameObj) => {
+            if (gameObj.arcadeid !== "") {
+                ArcadeFactory.fbGetArcadeName(gameObj.arcadeid).then((fbArcades) => {
+                    $scope.arcadesArray.push(fbArcades);
+                    matchArcades();
+                }).catch((error) => {
+                    console.log("getUserNames", error);
                 });
             }
-        }).catch((error) => {
-            console.log("getArcadeName error", error);
-        });
+        }); 
     };
 
     let getGames = () => {
         GameFactory.fbGetGameList($rootScope.user.uid).then((theGames) => {
             $scope.myGames = theGames;
+            $scope.scoresArray = $scope.myGames;
             Object.keys($scope.myGames).forEach((key, index) => {
                 let userGameId = theGames[index].giantbomb_id;
                 getUserGame(userGameId, index);            
             });
             Object.keys($scope.myGames).forEach((key, index) => {
                 let gameArcadeId = theGames[index].arcadeid;
-                getArcadeName(gameArcadeId, index);            
+                // getArcadeName(gameArcadeId, index);            
             });
+            getArcadeNames();
         }).catch((error) => {
             console.log("getGames error", error);
     	});

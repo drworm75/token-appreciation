@@ -1,5 +1,13 @@
 app.controller("AuthCtrl", function($location, $rootScope, $scope, AuthFactory, UserFactory) {
+
+    console.log($location.path());
     $scope.alerts = [];
+
+    $scope.currentPath = (route) => {
+        console.log(route === $location.path());
+        return route === $location.path();
+
+    };   
 
     $scope.auth = {
         email: "a@a.com",

@@ -1,20 +1,18 @@
 app.factory("ArcadeFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_CONFIG) {
 
 
-	let fbGetArcadeName = (arcadeId) => {
+	let fbGetArcadeName = (gbid) => {
 	let arcadesFromFb = [];
 	return $q((resolve, reject) => {
-		$http.get(`${FIREBASE_CONFIG.databaseURL}/arcades.json?orderBy="name"&equalTo="${arcadeId}"`)
-		.then((fbGames) => {
-			console.log(fbGames);
-			let fbGameCollection = fbGames.data;
+		$http.get(`${FIREBASE_CONFIG.databaseURL}/arcades.json?orderBy="arcadeid"&equalTo="${gbid}"`)
+		.then((fbArcades) => {
+			let fbGameCollection = fbArcades.data;
 			if (fbGameCollection !== null) {
 		        Object.keys(fbGameCollection).forEach((key) => {
-		          fbGameCollection[key].id=key;
 		          arcadesFromFb.push(fbGameCollection[key]);
 		        });
 		    }			
-				resolve(arcadesFromFb);
+				resolve(arcadesFromFb[0]);
 			})
 			.catch((error) => {
 				reject(error);
