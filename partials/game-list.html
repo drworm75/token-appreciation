@@ -1,27 +1,28 @@
-{{currentUser}} Game List
+<h2 class="text-center">{{currentUser}}'s Game Page</h2>
 
-<h1>User Games I've Played</h1>
 <div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:true}">
+	<div class="col-sm-4">
 	<h3 ng-show="!editing">
 
+	<img ng-src="{{game.icon}}">
 	<a ng-href="#!/leaderboard/{{game.name}}/{{game.giantbomb_id}}">{{game.name}}</a>		
 	{{game.year}}
-	<img ng-src="{{game.icon}}">
     <button class="btn btn-sm btn-info edit-btn" ng-click="editing = true; editGame(game.played_id)">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
     </button>
 	<br>
-	{{game.score}}
+	{{game.score | number:0}}
 	{{game.arcade_name}}
 	{{game.date}}
 
 
 	</h3>
+	</div>
 
 	<div ng-show="editing">
+		<img ng-src="{{game.icon}}">
 		{{game.name}}		
 		{{game.year}}
-		<img ng-src="{{game.icon}}">
         <input ng-model="currentPlayedObj.score" type="text">
         <input ng-model="currentPlayedObj.arcadeid" type="text">
         <input ng-model="currentPlayedObj.date" type="text">
@@ -37,13 +38,14 @@
 
 </div>
 
+<div class="col-sm-6 col-sm-offset-3">
+	<h1>Games I want to play</h1>
+	<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:false}">
+		{{game.name}}		
+		{{game.year}}
+		<img ng-src="{{game.icon}}">
 
-<h1>Games I want to play</h1>
-<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:false}">
-	{{game.name}}		
-	{{game.year}}
-	<img ng-src="{{game.icon}}">
 
 
-
+	</div>
 </div>

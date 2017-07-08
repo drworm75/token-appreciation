@@ -63,10 +63,4 @@ app.controller('LeaderboardCtrl', function($scope, $routeParams, UserFactory, Pl
 
     getLeaderboardScores();
 
-    let loadBgImg = () => {
-        this.getBgImg = BackgroundFactory.getBgImg;
-    };
-
-    loadBgImg();
-
 });

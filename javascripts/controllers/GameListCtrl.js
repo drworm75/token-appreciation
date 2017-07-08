@@ -1,7 +1,7 @@
 app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFactory, ArcadeFactory, PlayedWishlistGamesFactory, FIREBASE_CONFIG) {
     $scope.header = "Game List";
     $scope.gameTitle = "Root Beer Tapper";
-    $scope.currentUser = $rootScope.user.name;
+    $scope.currentUser = $rootScope.user.username;
     $scope.myGames = [];
     $scope.scoresArray = [];
     $scope.arcadesArray = [];
@@ -36,8 +36,10 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
         $scope.scoresArray.forEach((gameObj) => {
             if (gameObj.arcadeid !== "") {
                 ArcadeFactory.fbGetArcadeName(gameObj.arcadeid).then((fbArcades) => {
-                    $scope.arcadesArray.push(fbArcades);
-                    matchArcades();
+                    if (fbArcades !== undefined) {
+                        $scope.arcadesArray.push(fbArcades);
+                        matchArcades();
+                    }
                 }).catch((error) => {
                     console.log("getUserNames", error);
                 });
@@ -54,8 +56,7 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
                 getUserGame(userGameId, index);            
             });
             Object.keys($scope.myGames).forEach((key, index) => {
-                let gameArcadeId = theGames[index].arcadeid;
-                // getArcadeName(gameArcadeId, index);            
+                let gameArcadeId = theGames[index].arcadeid;       
             });
             getArcadeNames();
         }).catch((error) => {

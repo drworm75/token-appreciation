@@ -8,6 +8,7 @@ app.controller('GameNewCtrl', function($location, $rootScope, $scope, GameFactor
     $scope.arcadesArray = [];
     $scope.playedObj = {};
     $scope.newGameDataForUser = {};
+    $scope.myNewArcadeId = "";
 
  
     let getAllArcades = () => {
@@ -47,7 +48,7 @@ app.controller('GameNewCtrl', function($location, $rootScope, $scope, GameFactor
         $scope.newGameDataForUser.giantbomb_id = gameId;
         GameFactory.fbCreateWishlistGameObject($scope.newGameDataForUser).then(() => {
         }).catch((error) => {
-            console.log("reateWishlistGameObject error", addGameToFb);
+            console.log("reateWishlistGameObject error", error);
         });
     };
 
@@ -56,50 +57,62 @@ app.controller('GameNewCtrl', function($location, $rootScope, $scope, GameFactor
         $scope.newGameDataForUser.giantbomb_id = gameId;
         GameFactory.fbCreatePlayedGameObject($scope.newGameDataForUser).then(() => {
         }).catch((error) => {
-          console.log("createPlayedGameObject error", addGameToFb);
+          console.log("createPlayedGameObject error", error);
         });
     };
+
+    // let findArcadeId = (arcadeName) => {
+    //     ArcadeFactory.findArcadeId(arcadeName).then((arcadeId) => {
+    //         $scope.myNewArcadeId = arcadeId;
+    //     }).catch((error) => {
+    //         console.log("findArcadeId error", error);
+    //     });
+    // };
 
     $scope.checkForGameInFb = (passedName, gameStatus, userScore, userArcade, userDate) => {
         let gbIdToCheck = "";
         let thisGamesGbId = "";
         let holdGameObj = {};
-        if (gameStatus === "played-game") {
-            $scope.newGameDataForUser.is_played = true;
-            $scope.newGameDataForUser.score = userScore;
-            $scope.newGameDataForUser.arcadeid = userArcade;
-            $scope.newGameDataForUser.date = userDate;
-        }
-        $scope.gamesArray.forEach((gameObj) => {
-            if(gameObj.name === passedName) {
-                gbIdToCheck = gameObj.giantbomb_id;
-                holdGameObj = gameObj;
+        ArcadeFactory.findArcadeId(userArcade).then((arcadeId) => {
+            $scope.myNewArcadeId = arcadeId;
+            if (gameStatus === "played-game") {
+                    $scope.newGameDataForUser.is_played = true;
+                    $scope.newGameDataForUser.score = userScore;
+                    $scope.newGameDataForUser.arcadeid = $scope.myNewArcadeId;
+                    $scope.newGameDataForUser.date = userDate;
             }
-        });
-        GameFactory.fbCheckForGameInFb(gbIdToCheck).then((gameByIndex) => {
-            if(Object.getOwnPropertyNames(gameByIndex.data).length === 0) {
-                let newGameObj = {
-                    "name": holdGameObj.name,
-                    "image": holdGameObj.image,
-                    "year": holdGameObj.year,
-                    "icon": holdGameObj.icon,
-                    "giantbomb_id": holdGameObj.giantbomb_id
-                };  
-                addGameToFb(newGameObj, gameStatus);
-            } else {
-                gameByIndex = gameByIndex.data;
-                if (gameByIndex !== null) {
-                    Object.keys(gameByIndex).forEach((key) => {
-                        gameByIndex[key].id=key;
-                        thisGamesGbId = gameByIndex[key].giantbomb_id;
-                    });
-                    if (gameStatus === "not-played") {
-                        createWishlistGameObject(thisGamesGbId);
-                    } else {
-                      createPlayedGameObject(thisGamesGbId);
+            $scope.gamesArray.forEach((gameObj) => {
+                if(gameObj.name === passedName) {
+                    gbIdToCheck = gameObj.giantbomb_id;
+                    holdGameObj = gameObj;
+                }
+            });
+            GameFactory.fbCheckForGameInFb(gbIdToCheck).then((gameByIndex) => {
+                if(Object.getOwnPropertyNames(gameByIndex.data).length === 0) {
+                    let newGameObj = {
+                        "name": holdGameObj.name,
+                        "image": holdGameObj.image,
+                        "year": holdGameObj.year,
+                        "icon": holdGameObj.icon,
+                        "giantbomb_id": holdGameObj.giantbomb_id
+                    };  
+                    addGameToFb(newGameObj, gameStatus);
+                } else {
+                    gameByIndex = gameByIndex.data;
+                    if (gameByIndex !== null) {
+                        Object.keys(gameByIndex).forEach((key) => {
+                            gameByIndex[key].id=key;
+                            thisGamesGbId = gameByIndex[key].giantbomb_id;
+                        });
+                        if (gameStatus === "not-played") {
+                            createWishlistGameObject(thisGamesGbId);
+                        } else {
+                          createPlayedGameObject(thisGamesGbId);
+                        }
                     }
                 }
-            }
+        })
+        
         }).catch((error) => {
             console.log("fbCheckForGameInFb error", error);
         });
