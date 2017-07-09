@@ -57,6 +57,7 @@ app.controller('LeaderboardCtrl', function($scope, $routeParams, UserFactory, Pl
         $scope.scoresArray.forEach((scoreString, index) => {
             $scope.scoresArray[index].score = parseFloat(scoreString.score);
         });
+            console.log($scope.scoresArray);
             getUserNames();
             getArcadeNames();
         }).catch((error) => {

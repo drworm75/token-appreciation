@@ -1,12 +1,14 @@
-<div class="leaderboard">
+<div class="leaderboard new-game-container">
 	<div class="col-sm-6 col-sm-offset-3">
-		<h2 class="text-center">{{name}} Leaderboard</h2>
+		<h2 class="text-center retro">{{name}} Leaderboard</h2>
 		<div class="row">
-			<h3 ng-repeat="key in scoresArray | orderBy: 'score'">
-			<div class="col-sm-3">{{key.score | number:0}}</div>
-			<div class="col-sm-3">{{key.username}}</div>
-			<div class="col-sm-6">{{key.arcade_name}}</div>
-			</h3>
+			<h4 ng-repeat="key in scoresArray | orderBy: '-score'">
+			<ul>
+			<li><div class="col-sm-3 retro"><span ng-class="{'green': $index % 2 == 0 , 'pink': $index % 2 == 1}">{{key.score | number:0}}</span></div>
+			<div class="col-sm-3 retro"><span ng-class="{'green': $index % 2 == 0 , 'pink': $index % 2 == 1}">{{key.username}}</span></div>
+			<div class="col-sm-6 retro"><span ng-class="{'green': $index % 2 == 0 , 'pink': $index % 2 == 1}">{{key.arcade_name}}</span></div></li>
+			</ul>
+			</h4>
 		</div>
 	</div>
 </div>

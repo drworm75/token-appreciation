@@ -15,7 +15,8 @@ app.factory("ArcadeFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBAS
 			            		"arcadeid": arcadeId
 			            	});
 			        });
-			    }		
+			    }
+			    	console.log("arcadesFromFb", arcadesFromFb);			
 					resolve(arcadesFromFb[0]);
 			})
 			.catch((error) => {
