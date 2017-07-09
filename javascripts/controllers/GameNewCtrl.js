@@ -56,8 +56,8 @@ app.controller('GameNewCtrl', function($location, $rootScope, $scope, GameFactor
         $scope.newGameDataForUser.uid = $rootScope.user.uid;
         $scope.newGameDataForUser.giantbomb_id = gameId;
         GameFactory.fbCreatePlayedGameObject($scope.newGameDataForUser).then(() => {
-        }).catch((error) => {
-          console.log("createPlayedGameObject error", error);
+            $location.url('/game/list');    
+            console.log("createPlayedGameObject error", error);
         });
     };
 
@@ -111,7 +111,7 @@ app.controller('GameNewCtrl', function($location, $rootScope, $scope, GameFactor
                         }
                     }
                 }
-        })
+        });
         
         }).catch((error) => {
             console.log("fbCheckForGameInFb error", error);

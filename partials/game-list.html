@@ -1,51 +1,78 @@
-<h2 class="text-center">{{currentUser}}'s Game Page</h2>
+<h2 class="text-center retro easy-read">{{currentUser}}'s High Scores</h2>
 
-<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:true}">
-	<div class="col-sm-4">
-	<h3 ng-show="!editing">
-
-	<img ng-src="{{game.icon}}">
-	<a ng-href="#!/leaderboard/{{game.name}}/{{game.giantbomb_id}}">{{game.name}}</a>		
-	{{game.year}}
-    <button class="btn btn-sm btn-info edit-btn" ng-click="editing = true; editGame(game.played_id)">
-        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-    </button>
-	<br>
-	{{game.score | number:0}}
-	{{game.arcade_name}}
-	{{game.date}}
-
-
-	</h3>
+<div class="container-fluid">
+	<div class="row">
+		<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:true}">
+			<div class="col-md-4">
+				<div class="row">
+					<div class="col-md-3">
+						<img ng-src="{{game.icon}}">
+					</div>
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-md-12">
+								<h4  class="easy-read"><a ng-href="#!/leaderboard/{{game.name}}/{{game.giantbomb_id}}">{{game.name}}</a></h4>	
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+									<h5 class="easy-read">Release Year: {{game.year}}</h5>		
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-1" ng-show="!editing">
+					    <button class="btn btn-sm btn-info edit-btn md-mar-top" ng-click="editing = !editing; editGame(game.played_id)">
+					        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					    </button>
+					</div>					
+					<div class="col-md-11 game-container" ng-show="!editing">
+							<ul>
+								<h5 class="easy-read"><li>Personal Best: {{game.score | number:0}}</li></h5>
+								<h5 class="easy-read"><li>Played At: {{game.arcade_name}}</li></h5>
+								<h5 class="easy-read"><li>Date: {{game.date}}</li></h5>
+							</ul>
+					</div>
+					<div class="col-md-1" ng-show="editing">
+			            <button class="btn btn-sm btn-success md-mar-top" ng-click="editing = false; changeScore()">
+			                <i class=" fa fa-save"></i>
+			            </button><br>
+				        <button class="btn btn-sm btn-danger xs-mar-top" ng-click="deleteGameFromProfile(game.played_id)"><i class="fa fa-trash"></i></button>
+					</div>
+					<div class="col-md-11 game-container" ng-show="editing">
+							<ul >
+								<li class="easy-read">Personal Best:<input class="small-input" ng-model="currentPlayedObj.score" type="text"></li>
+								<li class="easy-read">Played At:<input class="small-input played-input" ng-model="currentPlayedObj.arcade_name" type="text"></li>
+								<li class="easy-read">Date:<input class="small-input date-input" ng-model="currentPlayedObj.date" type="text"></li>
+							</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-
-	<div ng-show="editing">
-		<img ng-src="{{game.icon}}">
-		{{game.name}}		
-		{{game.year}}
-        <input ng-model="currentPlayedObj.score" type="text">
-        <input ng-model="currentPlayedObj.arcadeid" type="text">
-        <input ng-model="currentPlayedObj.date" type="text">
-        <div class="pull-right">
-            <button class="btn btn-sm btn-success" ng-click="editing = false; changeScore()">
-                <i class=" fa fa-save"></i>
-            </button>
-        <button class="btn btn-sm btn-danger" ng-click="deleteGameFromProfile(game.played_id)"><i class="fa fa-trash"></i></button>
-        </div>
-    </div>
-
-
-
 </div>
 
-<div class="col-sm-6 col-sm-offset-3">
-	<h1>Games I want to play</h1>
-	<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:false}">
-		{{game.name}}		
-		{{game.year}}
-		<img ng-src="{{game.icon}}">
 
-
-
+<h2 class="text-center retro wishlist">{{currentUser}}'s Wishlist</h2>
+<div class="container-fluid">
+	<div class="row">
+		<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:false}">
+			<div class="col-sm-3">
+				<div class="col-sm-3">
+					<img ng-src="{{game.icon}}">
+				</div>
+				<div class="col-sm-9">
+					<ul>
+						<li class="wishlist">{{game.name}}</li>
+						<li class="wishlist">Release Year: {{game.year}}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
+
+
+
+

@@ -4,14 +4,19 @@ app.factory("ArcadeFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBAS
 	let fbGetArcadeName = (arcadeId) => {
 		let arcadesFromFb = [];
 		return $q((resolve, reject) => {
-			$http.get(`${FIREBASE_CONFIG.databaseURL}/arcades.json?orderBy="arcadeid"&equalTo="${arcadeId}"`)
+			$http.get(`${FIREBASE_CONFIG.databaseURL}/arcades/${arcadeId}.json`)
 			.then((fbGames) => {
 				let fbGameCollection = fbGames.data;
 				if (fbGameCollection !== null) {
 			        Object.keys(fbGameCollection).forEach((key) => {
-			            arcadesFromFb.push(fbGameCollection[key]);
+			            arcadesFromFb.push(
+			            	{
+			            		"name": fbGameCollection.name,
+			            		"arcadeid": arcadeId
+			            	});
 			        });
-			    }			
+			    }
+			    	console.log("arcadesFromFb", arcadesFromFb);			
 					resolve(arcadesFromFb[0]);
 			})
 			.catch((error) => {
@@ -19,6 +24,7 @@ app.factory("ArcadeFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBAS
 			});
 		});
 	};
+	
 
 	let fbGetAllArcades = () => {
 		arcadesFromFb = [];
@@ -58,11 +64,12 @@ app.factory("ArcadeFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBAS
 			$http.get(`${FIREBASE_CONFIG.databaseURL}/arcades.json?orderBy="name"&equalTo="${arcadeName}"`)
 			.then((fbArcades) => {
 		      	let fbArcadeCollection = fbArcades.data;
-				Object.keys(fbArcadeCollection).forEach((key) => {
-
-					console.log("Hello its", fbArcadeCollection[key].arcadeid);
-					newArcadeId = fbArcadeCollection[key].arcadeid;
-				});					
+	      		if (fbArcadeCollection !== null) {
+					Object.keys(fbArcadeCollection).forEach((key) => {
+						fbArcadeCollection[key].id=key;
+						newArcadeId = fbArcadeCollection[key].id;
+					});
+				}					
 				resolve(newArcadeId);
 			})
 			.catch((error) => {
@@ -70,6 +77,7 @@ app.factory("ArcadeFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBAS
 			});
 		});
 	};
+
 
 	return {
 		fbGetAllArcades: fbGetAllArcades,

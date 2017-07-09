@@ -23,6 +23,8 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
     };
 
     let matchArcades = () => {
+        console.log("scoresArray", $scope.scoresArray)
+        console.log("arcadesArray", $scope.arcadesArray)
         $scope.scoresArray.forEach((scoreObj, index) => {
             $scope.arcadesArray.forEach((arcadeObj) => {
                 if (scoreObj.arcadeid === arcadeObj.arcadeid) {
@@ -78,15 +80,28 @@ app.controller('GameListCtrl', function($rootScope, $routeParams, $scope, GameFa
     $scope.editGame = (played_id) => {
         $scope.myGames.forEach((gameObj) => {
             if(gameObj.played_id === played_id) {
+                console.log(gameObj);
                 $scope.currentPlayedObj = gameObj;
             }
         });
     };
 
     $scope.changeScore = ()  => {
-        PlayedWishlistGamesFactory.fbChangeScores($scope.currentPlayedObj).then(() => {
-        }).catch(() => {
-            console.log("changeScore error", error);
-        });
+        if ($scope.currentPlayedObj.arcade_name !== "") {
+            ArcadeFactory.findArcadeId($scope.currentPlayedObj.arcade_name).then((fbArcades) => {
+                console.log("retruned from find arcade Id", fbArcades);
+                if (fbArcades !== undefined) {
+                    $scope.currentPlayedObj.arcadeid = fbArcades;
+                    delete $scope.currentPlayedObj.arcade_name;
+                    console.log("$scope.currentPlayedObj", $scope.currentPlayedObj);
+                }
+                PlayedWishlistGamesFactory.fbChangeScores($scope.currentPlayedObj).then(() => {
+                        getGames();
+                    }).catch(() => {
+                    console.log("changeScore error", error);
+                });
+            });
+        }
     };
+
 });
