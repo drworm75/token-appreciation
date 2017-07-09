@@ -4,6 +4,7 @@ app.factory("PlayedWishlistGamesFactory", function($http, $q, FIREBASE_CONFIG) {
   	return $q((resolve, reject) => {
   		$http.delete(`${FIREBASE_CONFIG.databaseURL}/playedwishlistgames/${objId}.json`)
   		.then((results) => {
+  	console.log("results", results);
   			resolve();
   		})
      .catch((error) => {

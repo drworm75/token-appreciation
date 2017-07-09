@@ -1,51 +1,87 @@
-<h1>Welcome to {{header}}</h1>	
+<div class="new-game-container">
+<h2 class="text-center">Add Games To Your Collection</h2>	
+	<div class="col-sm-6 col-sm-offset-3">
+		<div class="col-sm-6">
+			<h4><input type="radio" name="content" value="played-game" ng-model="gameStatus">&nbsp&nbspAdd A High Score</h4>
+		</div>
+		<div class="col-sm-6">
+			<h4><input type="radio" name="content" value="not-played" ng-model="gameStatus">&nbsp&nbspAdd To Wishlist</h4>
+		</div>
+	</div>
 
-<h3>Let's search for an arcade game!</h3>
-<input type="text" list="games" name="games" ng-model="search" ng-keyup="searchGiantBomb(search)">
-	<datalist id="games">
-	    <option ng-repeat="key in gamesArray" value="{{key.name}}">
-	</datalist>
-	<button ng-click="searched = true; card(search)">
-		Select Game
-	</button>
+<div class="col-sm-6 col-sm-offset-3" ng-show="gameStatus == 'played-game'">
+	<h3 class="text-center">Search A Game To Add Your Score</h3>
+	<div class="row">
+	    <div class="col-lg-8 col-lg-offset-2">
+		    <div class="input-group">
+				<input type="text" list="games" name="games" ng-model="search" class="form-control" ng-keyup="searchGiantBomb(search)">
+				<datalist id="games">
+				    <option ng-repeat="key in gamesArray" value="{{key.name}}"></option>
+				</datalist>
+	            <span class="input-group-btn">
 
-	<div ng-show="searched">
-		{{heldGame.name}}
-		{{heldGame.year}}
+					<button class="btn btn-default" type="button" ng-click="searched = true; card(search)">
+						Select Game
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="col-sm-6 col-sm-offset-3" ng-show="gameStatus == 'not-played'">
+	<h3 class="text-center">Search A Game To Add To Your Wishlist</h3>
+	<div class="row">
+	    <div class="col-lg-8 col-lg-offset-2">
+		    <div class="input-group">
+				<input type="text" list="games" name="games" ng-model="search" class="form-control" ng-keyup="searchGiantBomb(search)">
+				<datalist id="games">
+				    <option ng-repeat="key in gamesArray" value="{{key.name}}"></option>
+				</datalist>
+	            <span class="input-group-btn">
+
+					<button class="btn btn-default" type="button" ng-click="searched = true; card(search)">
+						Select Game
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+	<div class="col-sm-8 col-sm-offset-2" ng-show="searched">
+		<h4 class="text-center"> {{heldGame.name}} {{heldGame.year}}</h4>
 		<br>
-		<img src ="{{heldGame.image}}" height="400px">
-		<input type="radio" name="content" value="not-played" ng-model="gameStatus">Wishlist
-		<input type="radio" name="content" value="played-game" ng-model="gameStatus">I've Played It
-		<span ng-show="gameStatus == 'not-played'">
-			<button ng-click="checkForGameInFb(search, gameStatus)">Submit Game 1</button>
+		<img class="center-block" src="{{heldGame.image}}" height="400px">
+		<span ng-show="gameStatus == 'not-played'"><br>
+			<button class="center-block" ng-click="checkForGameInFb(search, gameStatus)">Add To Wishlist</button>
 		</span>
+
 		<span ng-show="gameStatus == 'played-game'">
-		<br>
-		Your Score:
-		<br>
-		<input type="text" ng-model="userScore" placeholder="560,000">
-		<br>
-		<div id="arcade-info">
-		Date:
-		<br>
-		<input type="text" ng-model="userDate" placeholder="2/14/98">
-		Played At:
-		<br>
+		<div class="panel-body">
+			<div class="col-xs-3"><h4>Your Score:</h4><input type="text" ng-model="userScore" placeholder="560000"></div>
+			<div class="col-xs-3"><h4>Date:</h4><input type="text" ng-model="userDate" placeholder="04/01/15"></div>
+			<div class="col-xs-3"><h4>Played At:</h4>
 		<input type="text" list="arcades" name="arcades" ng-model="userArcade" placeholder="Arcade Name">
 			<datalist id="arcades">
 				<option ng-repeat="arcadeKey in arcadesArray | filter: inputArcade" value="{{arcadeKey.name}}"></option>
-				<select>New Arcade</select>
-
-				<!-- append ? -->
 			</datalist>
-			<button ng-click="newArcadeView(search, gameStatus, userScore, userArcade, userDate)">Enter New Arcade</button>
 			</div>
-		<br>
-		<button ng-click="checkForGameInFb(search, gameStatus, userScore, userArcade, userDate)">
-			Submit Game 2
+		<div class="col-xs-3 text-center"><h4>Arcade Not Listed?</h4>
+			<button ng-click="newArcadeView(search, gameStatus, userScore, userArcade, userDate)">Enter New Arcade</button>
+		<br></div>		
+		</div>
+		<div class="col-xs-4 col-xs-offset-4 text-center"><br><button ng-click="checkForGameInFb(search, gameStatus, userScore, userArcade, userDate)">
+		Add To High Scores</button></div>
 		</button>
 		</span>
-	</div>
+		</div>
+		</div>
+
 
 
 

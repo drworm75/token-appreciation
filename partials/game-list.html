@@ -58,7 +58,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div ng-repeat="game in myGames | orderBy: 'name' | filter: {is_played:false}">
-			<div class="col-sm-3">
+			<div class="col-sm-3 wishlist-container">
 				<div class="col-sm-3">
 					<img ng-src="{{game.icon}}">
 				</div>
