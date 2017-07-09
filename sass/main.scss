@@ -10,6 +10,11 @@ option {
     padding: 0px 2px 1px;
 }
 
+ul {
+  list-style-type: none;
+  padding: 5px;
+}
+
 #rare-games {
 	width: 100vw;
 }
@@ -39,12 +44,29 @@ option {
 	height: 100vh;
 }
 
+.small-input {
+    width: 150px;
+}
+
+.played-input {
+    margin-left: 28px;
+}
+
+.date-input {
+    margin-left: 58px;
+}
+
+.wishlist-img {
+    padding-left: 80px;
+}
+
+
 
 #arcade-info {
 	margin-left: 200px;
 }
 
-.leaderboard {
+body {
 	background-image: url("/images/galaga-bg.jpeg");
 	height: 100vh;
 }
@@ -52,5 +74,30 @@ option {
 .retro {
     // font-family: 'Press Start 2P', cursive;
     font-family: $old-school;
+}
+
+.easy-read {
+    color: $arcgreen;
+}
+
+.wishlist {
+    color: $arcpink;
+}
+
+.game-container {
+    min-height: 140px;
+    padding-right: 0;
+}
+
+.sm-mar-rt {
+    margin-right: 5px;
+}
+
+.md-mar-top {
+    margin-top: 15px;
+}
+
+.xs-mar-top {
+    margin-top: 2px;
 }
 

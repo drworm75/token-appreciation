@@ -1,24 +1,30 @@
 app.factory("ArcadeFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBASE_CONFIG) {
 
 
-	let fbGetArcadeName = (gbid) => {
-	let arcadesFromFb = [];
-	return $q((resolve, reject) => {
-		$http.get(`${FIREBASE_CONFIG.databaseURL}/arcades.json?orderBy="arcadeid"&equalTo="${gbid}"`)
-		.then((fbArcades) => {
-			let fbGameCollection = fbArcades.data;
-			if (fbGameCollection !== null) {
-		        Object.keys(fbGameCollection).forEach((key) => {
-		          arcadesFromFb.push(fbGameCollection[key]);
-		        });
-		    }			
-				resolve(arcadesFromFb[0]);
+	let fbGetArcadeName = (arcadeId) => {
+		let arcadesFromFb = [];
+		return $q((resolve, reject) => {
+			$http.get(`${FIREBASE_CONFIG.databaseURL}/arcades/${arcadeId}.json`)
+			.then((fbGames) => {
+				let fbGameCollection = fbGames.data;
+				if (fbGameCollection !== null) {
+			        Object.keys(fbGameCollection).forEach((key) => {
+			            arcadesFromFb.push(
+			            	{
+			            		"name": fbGameCollection.name,
+			            		"arcadeid": arcadeId
+			            	});
+			        });
+			    }
+			    	console.log("arcadesFromFb", arcadesFromFb);			
+					resolve(arcadesFromFb[0]);
 			})
 			.catch((error) => {
 				reject(error);
 			});
 		});
 	};
+	
 
 	let fbGetAllArcades = () => {
 		arcadesFromFb = [];
@@ -52,10 +58,32 @@ app.factory("ArcadeFactory", function($http, $q, $sce, GIANTBOMB_CONFIG, FIREBAS
 	    });
 	};
 
+	let findArcadeId = (arcadeName) => {
+		let newArcadeId = "";
+		return $q((resolve, reject) => {
+			$http.get(`${FIREBASE_CONFIG.databaseURL}/arcades.json?orderBy="name"&equalTo="${arcadeName}"`)
+			.then((fbArcades) => {
+		      	let fbArcadeCollection = fbArcades.data;
+	      		if (fbArcadeCollection !== null) {
+					Object.keys(fbArcadeCollection).forEach((key) => {
+						fbArcadeCollection[key].id=key;
+						newArcadeId = fbArcadeCollection[key].id;
+					});
+				}					
+				resolve(newArcadeId);
+			})
+			.catch((error) => {
+				reject(error);
+			});
+		});
+	};
+
+
 	return {
 		fbGetAllArcades: fbGetAllArcades,
 		fbAddArcade: fbAddArcade,
-		fbGetArcadeName: fbGetArcadeName
+		fbGetArcadeName: fbGetArcadeName,
+		findArcadeId: findArcadeId
 	};
 
 });

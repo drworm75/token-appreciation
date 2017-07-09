@@ -14,6 +14,7 @@ app.controller('ArcadeNewCtrl', function($scope, $location, ShareFactory, $rootS
 
     let createPlayedGameObject = (userObj) => {
         GameFactory.fbCreatePlayedGameObject(userObj).then(() => {
+            $location.url('/game/list'); 
         }).catch((error) => {
             console.log("createPlayedGameObject error", addGameToFb);
         });
@@ -38,6 +39,7 @@ app.controller('ArcadeNewCtrl', function($scope, $location, ShareFactory, $rootS
             "name": userInfo.userArcade,
             "address": userInfo.userAddress
         };
+        console.log("Adding new arcade");
         ArcadeFactory.fbAddArcade(newArcade).then((arcadeId) => {
             $scope.playedObj = {
                 "arcadeid": arcadeId.name,

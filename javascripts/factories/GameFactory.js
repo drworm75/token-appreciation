@@ -103,7 +103,7 @@ let fbGetUserGame = (gameId) => {
 	let gbSearchGiantBomb = (search) => {
 		let gameNames = [];
 		return $q((resolve, reject) => {
-			$http.get(`https://token-appreciation.herokuapp.com/api/giantbomb/?api_key=${GIANTBOMB_CONFIG.gbapikey}&format=json&query="${search}"&resources=game&field_list=name,image,images,original_release_date,id`)
+			$http.get(`https://www.giantbomb.com/api/search/?api_key=${GIANTBOMB_CONFIG.gbapikey}&format=json&query="${search}"&resources=game&field_list=name,image,images,original_release_date,id`)
 			.then((gbInfo) => {
 				let gameCollection = gbInfo.data.results;			
 				Object.keys(gameCollection).forEach((key) => {
